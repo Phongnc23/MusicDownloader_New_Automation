@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Music Downloader (New) Regression Suite" verbose="1">
+
+    <listeners>
+        <listener class-name="listeners.TestListener"/>
+        <listener class-name="listeners.RetryTransformer"/>
+    </listeners>
+
+    <test name="Home Screen Tests">
+        <classes>
+            <class name="testcases.home.Home01_Verify_App_Launched"/>
+            <class name="testcases.home.Home03_Verify_UI_Display"/>
+            <class name="testcases.home.Home04_Verify_Quick_Actions"/>
+            <class name="testcases.home.Home05_Verify_Bottom_Nav"/>
+            <class name="testcases.home.Home06_Verify_Mini_Player"/>
+            <class name="testcases.home.Home07_Verify_Exit_Dialog"/>
+        </classes>
+    </test>
+
+    <test name="Menu Module">
+        <classes>
+            <class name="testcases.menu.Menu01_Verify_Drawer_Display"/>
+            <class name="testcases.menu.Menu02_Verify_Item_Navigation"/>
+            <class name="testcases.menu.Menu03_Verify_Sleep_Timer"/>
+            <class name="testcases.menu.Menu04_Verify_Settings_Screen"/>
+            <class name="testcases.menu.Menu05_Verify_Exit_Flow"/>
+        </classes>
+    </test>
+
+    <test name="Search Online Module">
+        <classes>
+            <class name="testcases.search.Search01_Verify_Navigation"/>
+            <class name="testcases.search.Search02_Verify_Input_And_Suggestions"/>
+            <class name="testcases.search.Search03_Verify_Results_And_Download"/>
+            <class name="testcases.search.Search04_Verify_E2E_Download_And_Verify"/>
+        </classes>
+    </test>
+
+    <test name="Tracks Module">
+        <classes>
+            <class name="testcases.tracks.Tracks01_Verify_List_And_TopControls"/>
+            <class name="testcases.tracks.Tracks02_Verify_Sort"/>
+            <class name="testcases.tracks.Tracks03_Verify_Playback_And_MiniPlayer"/>
+            <class name="testcases.tracks.Tracks04_Verify_EditSheet_And_Dialogs"/>
+            <class name="testcases.tracks.Tracks05_Verify_Rename_Favorite_Info"/>
+            <class name="testcases.tracks.Tracks06_Verify_Queue_Share_Delete"/>
+            <class name="testcases.tracks.Tracks07_Verify_PlayNow"/>
+            <class name="testcases.tracks.Tracks08_Verify_PlayingQueue"/>
+            <class name="testcases.tracks.Tracks09_Verify_SelectMode"/>
+        </classes>
+    </test>
+
+    <test name="Artists Module">
+        <classes>
+            <class name="testcases.artists.Artists01_Verify_UI_Display"/>
+            <class name="testcases.artists.Artists02_Verify_Navigation"/>
+            <class name="testcases.artists.Artists03_Verify_Edit_Sheet"/>
+            <class name="testcases.artists.Artists04_Verify_Edit_Actions"/>
+            <class name="testcases.artists.Artists05_Verify_Share_With_Limit"/>
+            <class name="testcases.artists.Artists06_Verify_Album_Folders"/>
+            <class name="testcases.artists.Artists07_Verify_Detail_Edit_Sheet"/>
+            <class name="testcases.artists.Artists08_Verify_Sort"/>
+            <class name="testcases.artists.Artists09_Verify_SelectMode"/>
+        </classes>
+    </test>
+
+    <test name="Albums Module">
+        <classes>
+            <class name="testcases.albums.Albums01_Verify_UI_Display"/>
+            <class name="testcases.albums.Albums02_Verify_Navigation"/>
+            <class name="testcases.albums.Albums03_Verify_Sort"/>
+            <class name="testcases.albums.Albums04_Verify_Edit_Sheet"/>
+            <class name="testcases.albums.Albums05_Verify_Edit_Actions"/>
+            <class name="testcases.albums.Albums06_Verify_Share_With_Limit"/>
+            <class name="testcases.albums.Albums07_Verify_Playback"/>
+            <class name="testcases.albums.Albums08_Verify_Context_Menus"/>
+            <class name="testcases.albums.Albums09_Verify_SelectMode"/>
+        </classes>
+    </test>
+
+    <test name="Playlists Module">
+        <classes>
+            <class name="testcases.playlists.Playlists01_Verify_UI_Display"/>
+            <class name="testcases.playlists.Playlists02_Verify_Detail_Navigation"/>
+            <class name="testcases.playlists.Playlists03_Verify_Create_Dialog"/>
+            <class name="testcases.playlists.Playlists04_Verify_Sheets"/>
+            <class name="testcases.playlists.Playlists05_Verify_Rename"/>
+            <class name="testcases.playlists.Playlists06_Verify_Delete"/>
+            <class name="testcases.playlists.Playlists07_Verify_Clear_And_Share"/>
+        </classes>
+    </test>
+
+    <test name="Search In Library Module">
+        <classes>
+            <class name="testcases.searchlibrary.SearchLibrary01_Verify_Open_And_UI"/>
+            <class name="testcases.searchlibrary.SearchLibrary02_Verify_Query_Behavior"/>
+            <class name="testcases.searchlibrary.SearchLibrary03_Verify_Match_Modes"/>
+            <class name="testcases.searchlibrary.SearchLibrary04_Verify_Tabs"/>
+            <class name="testcases.searchlibrary.SearchLibrary05_Verify_Result_Navigation"/>
+        </classes>
+    </test>
+
+</suite>

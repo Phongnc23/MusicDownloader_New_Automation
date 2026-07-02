@@ -1,0 +1,44 @@
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# Test outputs
+test-output/
+reports/
+screenshots/
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local properties
+local.properties
+*.local
+
+# Excel temp files
+~$*.xlsx
+~$*.xls
+
+# Claude Code
+.claude/
