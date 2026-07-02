@@ -1,70 +1,160 @@
 # Music Downloader (New) - Automation Framework
 
-Framework Appium POM cho app Music Downloader (ban moi), copy pattern tu project Music Downloader / Voice Changer.
+Framework kiem thu tu dong (Appium + Java + TestNG, mo hinh Page Object) cho app
+**Music Downloader (New)** tren Android.
 
-## Yeu cau moi truong
+---
 
-- JDK 21
-- Appium Server 2.18.0 (driver `uiautomator2`)
-- Android device/emulator (Oppo Pad Neo - Android 14)
-- IntelliJ IDEA
+## 1. Yeu cau moi truong
 
-## Cac buoc chay
+| Thanh phan | Phien ban / Ghi chu |
+|------------|---------------------|
+| JDK | **21** (bat buoc) |
+| Node.js + Appium | **Appium 2.x** (`npm i -g appium`) |
+| Appium driver | `uiautomator2` (`appium driver install uiautomator2`) |
+| Android SDK | `adb` co trong PATH |
+| Thiet bi | Android device/emulator (dev: Oppo Pad Neo - Android 14, 1720x2408) |
+| IDE (tuy chon) | IntelliJ IDEA |
 
-### 1. Dien thong tin app moi
-Mo `src/main/java/constants/AppConstants.java`, update:
-```java
-APP_PACKAGE  = "..."   // package app moi
-APP_ACTIVITY = "..."   // main activity app moi
-```
-Lay bang lenh (khi app dang mo):
+> Gradle KHONG can cai san - dung `gradlew` (wrapper, tu tai Gradle 9.0.0).
+
+Kiem tra nhanh:
 ```bash
-adb shell "dumpsys activity activities | grep mResumedActivity"
+java -version        # phai la 21
+appium --version     # 2.x
+appium driver list   # thay uiautomator2 (installed)
+adb devices          # thay thiet bi cua ban
 ```
 
-### 2. Open Project trong IntelliJ
-1. **File** -> **Open** -> chon folder project
-2. IntelliJ tu detect `build.gradle` -> click **Trust Project**
-3. Doi Gradle sync xong
-4. Neu code do: chuot phai `src/main/java` -> **Mark Directory as** -> **Sources Root**;
-   `src/test/java` -> **Test Sources Root**
+---
 
-### 3. Verify Device
+## 2. Cai dat (lan dau)
+
+### B1. Clone / giai nen project
 ```bash
-adb devices
+cd MusicDownloader_Flutter-V2
 ```
 
-### 4. Start Appium Server
+### B2. Tao file cau hinh `.env`
+File `.env` chua cau hinh RIENG cua may ban (da bi `.gitignore`). Copy tu mau:
+```bash
+cp .env.example .env      # Git Bash / macOS / Linux
+# copy .env.example .env  # Windows CMD
+```
+Mo `.env` va sua **UDID** (lay tu `adb devices`) + `DEVICE_NAME` cho dung may.
+
+> Neu la may FRESH (chua tung chay Appium) -> dat `SKIP_SERVER_INSTALL=false`
+> trong `.env` cho lan chay dau (de Appium cai uiautomator2 server), sau do co the bat lai `true` cho nhanh.
+
+### B3. Cai app duoi test len thiet bi
+Cai file APK cua Music Downloader (New) len thiet bi. Package mac dinh:
+`com.musicdownloaderapp.musicdownloadappfree.mp3download` (sua trong `.env` neu khac).
+
+---
+
+## 3. Chay test
+
+### B1. Cam thiet bi + kiem tra
+```bash
+adb devices          # phai thay thiet bi "device" (khong phai "unauthorized")
+```
+
+### B2. Khoi dong Appium server (mo 1 terminal rieng, de nguyen)
 ```bash
 appium
 ```
-Doi thay:
+Doi dong: `Appium REST http interface listener started on http://0.0.0.0:4723`
+
+### B3. Chay test (terminal khac)
+```bash
+# Chay TOAN BO regression (mac dinh suite = src/test/resources/regression.xml)
+./gradlew test              # macOS/Linux/Git Bash
+gradlew.bat test           # Windows CMD/PowerShell
+
+# May RAM thap -> them --no-daemon cho nhe bo nho
+./gradlew test --no-daemon
 ```
-[Appium] Appium REST http interface listener started on http://0.0.0.0:4723
+
+#### Chay 1 SUITE cu the
+Dat property `-Psuite=<ten>` (tro toi `src/test/resources/<ten>.xml`):
+```bash
+./gradlew test -Psuite=regression
 ```
 
-### 5. Chay Test
-- Chuot phai `src/test/resources/regression.xml` -> **Run 'regression.xml'**
-- Hoac: `gradlew test`
+#### Chay 1 CLASS hoac 1 METHOD
+Project chay qua **TestNG suite XML** nen `--tests` KHONG co tac dung. Tao 1 file
+suite XML tam (vd `src/test/resources/_tmp.xml`) roi tro toi no:
+```xml
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="tmp" verbose="1">
+  <listeners>
+    <listener class-name="listeners.TestListener"/>
+    <listener class-name="listeners.RetryTransformer"/>
+  </listeners>
+  <test name="one">
+    <classes>
+      <class name="testcases.home.Home03_Verify_UI_Display">
+        <methods><include name="TC_HOME_007_quick_actions"/></methods>
+      </class>
+    </classes>
+  </test>
+</suite>
+```
+```bash
+./gradlew test -Psuite=_tmp
+```
 
-Report nam o `reports/Music_Downloader_New_Report.html`.
+---
 
-## Project Structure
-Xem chi tiet trong [CLAUDE.md](./CLAUDE.md).
+## 4. Xem ket qua
 
-## Troubleshooting
+| Loai | Duong dan |
+|------|-----------|
+| ExtentReport (HTML dep) | `reports/ExtentReport.html` |
+| Gradle test report | `build/reports/tests/test/index.html` |
+| Screenshot khi FAIL | `screenshots/` |
+| Log chi tiet | console + `log4j2.xml` cau hinh |
+
+---
+
+## 5. Cau truc & quy uoc
+
+Xem chi tiet trong [CLAUDE.md](./CLAUDE.md): cau truc thu muc, quy uoc dat ten,
+Page Object pattern, hanh vi dac thu (bypass quang cao, retry flaky, sort truoc khi
+phat nhac, ...).
+
+Tom tat:
+- `src/main/java/` - code framework: `base/`, `pages/`, `driver/`, `constants/`, `helpers/`, `utils/`, `listeners/`
+- `src/test/java/testcases/<module>/` - test theo module (home, menu, search, tracks, artists, albums, playlists, searchlibrary)
+- `src/test/resources/*.xml` - TestNG suite (regression.xml = day du)
+- `docs/dom/` - DOM tung man hinh; `docs/testcases/` - test case Excel
+
+---
+
+## 6. Troubleshooting
 
 ### "Could not start a new session"
-- Check Appium server dang chay
-- Check `adb devices` thay device
-- Check app da cai tren device, package/activity dung trong AppConstants
+- Appium server dang chay? (`appium` o terminal rieng)
+- `adb devices` thay device (khong "unauthorized")?
+- App da cai tren device? Package/activity dung trong `.env`?
+- May fresh chua co uiautomator2 server -> dat `SKIP_SERVER_INSTALL=false` trong `.env`.
 
-### "Element not found"
-- Quang cao chua tat -> check log `[Ad]`
-- UI thay doi -> re-inspect bang Appium Inspector
-- Timing -> tang `MEDIUM_WAIT` trong TimeOutConstants
+### "Element not found" / test flaky
+- Quang cao chua tat -> xem log `[Ad]`.
+- App churn (bai nhac ngan tu chuyen) -> `RetryTransformer` da tu retry 2 lan; xem [CLAUDE.md](./CLAUDE.md).
+- UI thay doi -> re-inspect bang Appium Inspector, cap nhat locator/toa do.
+- Timing -> tang `MEDIUM_WAIT` trong `constants/TimeOutConstants.java`.
 
-### "Test passes locally but fails on Oppo"
-- Capability `ignoreHiddenApiPolicyError: true` (da co)
-- Settings -> Developer Options -> bat **USB debugging (Security settings)**
-- Tat **Permission monitoring** neu co
+### Test fail vi thieu du lieu (album/bai hat)
+- Mot so test tung hard-code ten album/bai; da chuyen sang **tu tim du lieu co thuc**.
+- Neu van thieu -> tai them nhac vao thu vien app, hoac xem hang so trong test class.
+
+### "Test pass tren may khac, fail tren Oppo/ColorOS"
+- Capability `ignoreHiddenApiPolicyError: true` (da bat san).
+- Settings -> Developer Options -> bat **USB debugging (Security settings)**.
+- Tat **Permission monitoring** neu co.
+
+### App bi ket o 1 man (vd Search) lam test sau khong dieu huong duoc
+```bash
+adb shell am force-stop com.musicdownloaderapp.musicdownloadappfree.mp3download
+```

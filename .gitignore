@@ -32,6 +32,10 @@ logs/
 Thumbs.db
 desktop.ini
 
+# Cau hinh RIENG cua may (UDID/device) - giu lai .env.example lam mau
+.env
+!.env.example
+
 # Local properties
 local.properties
 *.local
