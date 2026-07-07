@@ -2,6 +2,7 @@ package testcases.playlists;
 
 import base.BaseTest;
 import com.aventstack.extentreports.Status;
+import constants.AppConstants;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -10,11 +11,11 @@ import report.ExtentReportManager;
 
 /**
  * Module: Playlists - Detail Navigation (TC_PL_003..007).
- * EMPTY_PL phai la 1 user playlist 0 track tren thiet bi (vd QA_PL_6710).
+ * EMPTY_PL: user playlist RONG - TU TAO neu chua co (portable, khong phu thuoc data san tren may).
  */
 public class Playlists02_Verify_Detail_Navigation extends BaseTest {
 
-    private static final String EMPTY_PL = "QA_PL_6710";
+    private static final String EMPTY_PL = AppConstants.AUTO_USER_PLAYLIST;
 
     private PlaylistsPage goPlaylists(HomePage home) {
         PlaylistsPage pl = new PlaylistsPage();
@@ -83,10 +84,12 @@ public class Playlists02_Verify_Detail_Navigation extends BaseTest {
     @Test(description = "TC_PL_007: Empty playlist (0 track) detail mo, hero '0 tracks', co Add new track")
     public void TC_PL_007_empty_playlist_detail() {
         HomePage home = new HomePage();
-        PlaylistsPage pl = goPlaylists(home);
+        PlaylistsPage pl = new PlaylistsPage();
 
-        Assert.assertTrue(pl.isPlaylistListed(EMPTY_PL), "Khong thay playlist rong " + EMPTY_PL
-                + " (sua hang so EMPTY_PL cho khop thiet bi)");
+        // Portable: TU TAO playlist rong neu chua co (khong phu thuoc fixture san tren may).
+        pl.ensureUserPlaylist(home, EMPTY_PL);
+        Assert.assertTrue(pl.isPlaylistsScreenDisplayed(), "Khong vao duoc man Playlists");
+        Assert.assertTrue(pl.isPlaylistListed(EMPTY_PL), "Khong tao/thay duoc playlist rong " + EMPTY_PL);
         pl.tapPlaylistByName(EMPTY_PL);
         home.sleep(1500);
         Assert.assertTrue(pl.isDetailWithControlsOpen(), "Chua vao detail playlist rong");

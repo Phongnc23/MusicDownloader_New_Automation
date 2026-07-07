@@ -60,6 +60,11 @@ public final class AppConstants {
     // Screenshot - ket thuc bang '/' vi se noi truc tiep voi ten file.
     public static final String SCREENSHOT_DIR = get("SCREENSHOT_DIR", "screenshots/");
 
+    // Playlist AUTO-FIXTURE: cac test can 1 user playlist rong (detail/sheet/search) TU TAO neu chua co
+    // (PlaylistsPage.ensureUserPlaylist) -> portable, khong phu thuoc data san tren may. Ten rieng
+    // (khac "QA_PL_" tao boi TC_TRK_034) de khong lan voi playlist rac.
+    public static final String AUTO_USER_PLAYLIST = get("AUTO_USER_PLAYLIST", "QAAUTO_PL");
+
     // External packages (he thong Android - hiem khi doi)
     public static final String PERMISSION_PACKAGE      = get("PERMISSION_PACKAGE", "com.android.permissioncontroller");
     public static final String SETTINGS_PACKAGE        = get("SETTINGS_PACKAGE", "com.android.settings");

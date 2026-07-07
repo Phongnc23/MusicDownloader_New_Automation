@@ -60,6 +60,10 @@ public class SearchOnlinePage extends BasePage {
     // Dau hieu phan biet KET QUA voi GOI Y
     private static final String RESULT_MARK = " • ";
 
+    // Icon clickable (dung tim nut download tren mini player)
+    private final By clickableImages = AppiumBy.androidUIAutomator(
+            "new UiSelector().className(\"android.widget.ImageView\").clickable(true)");
+
     // =========================================================
     //  Trang thai man
     // =========================================================
@@ -253,6 +257,46 @@ public class SearchOnlinePage extends BasePage {
         int cy = rect.getY() + rect.getHeight() / 2;
         GestureUtils.tap(driver, DOWNLOAD_BTN_CX, cy);
         log.info("Tap download ket qua index {} (y={})", index, cy);
+    }
+
+    /**
+     * Nhan chon (PHAT) ket qua thu index -> mo mini player o day. Tap THAN row (vung title x=860,
+     * xa icon download x=1666) bang clickGesture (giong adb tap) cho tin cay tren Flutter.
+     */
+    public void playResult(int index) {
+        List<WebElement> r = resultElements();
+        if (index >= r.size()) {
+            log.warn("Khong co result {} de phat", index);
+            return;
+        }
+        Rectangle rect = r.get(index).getRect();
+        int cy = rect.getY() + rect.getHeight() / 2;
+        GestureUtils.clickGesture(driver, 860, cy);
+        log.info("Phat result {} (clickGesture 860,{})", index, cy);
+    }
+
+    /**
+     * Tai bai DANG PHAT qua nut download tren MINI PLAYER (icon ben PHAI icon pause, tam ~1648,2338).
+     * Tim icon clickable ben phai nhat trong dai mini player (y>=2260, x>=1590); dung clickGesture
+     * (W3C pointer tap KHONG kich hoat duoc icon Flutter nay - da kiem chung). Fallback toa do 1648,2338.
+     */
+    public void downloadViaMiniPlayer() {
+        int x = 1648, y = 2338;
+        try {
+            int bestX = -1;
+            for (WebElement el : driver.findElements(clickableImages)) {
+                Rectangle r = el.getRect();
+                if (r.getY() >= 2260 && r.getX() >= 1590 && r.getX() > bestX) {
+                    bestX = r.getX();
+                    x = r.getX() + r.getWidth() / 2;
+                    y = r.getY() + r.getHeight() / 2;
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Khong tim duoc icon download mini player ({}) -> fallback toa do", e.getMessage());
+        }
+        GestureUtils.clickGesture(driver, x, y);
+        log.info("Download qua mini player tai ({},{})", x, y);
     }
 
     // =========================================================

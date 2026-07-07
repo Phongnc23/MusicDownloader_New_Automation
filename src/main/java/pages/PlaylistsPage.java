@@ -381,6 +381,20 @@ public class PlaylistsPage extends BasePage {
 
     // ===================== HIGH-LEVEL FLOWS =====================
     /** Tao playlist moi (mo Create dialog -> nhap ten -> SAVE). */
+    /**
+     * Dam bao co user playlist RONG ten `name` (tao neu CHUA co). Portable: chay may nao cung co data,
+     * KHONG phu thuoc fixture san tren thiet bi. Cac test lien quan (detail/sheet/search) goi ham nay
+     * -> test chay dau se TAO, cac test sau DUNG LAI (tan dung data da tao). Ket thuc tren Playlists list.
+     */
+    public void ensureUserPlaylist(HomePage home, String name) {
+        gotoPlaylistsList(home);
+        if (isPlaylistListed(name)) { gotoPlaylistsList(home); return; }
+        gotoPlaylistsList(home);          // ve dau list de thay nut "Create new playlist"
+        createPlaylistFlow(name);
+        gotoPlaylistsList(home);
+        log.info("ensureUserPlaylist: da dam bao playlist '{}' ton tai", name);
+    }
+
     public void createPlaylistFlow(String name) {
         tapCreateNewPlaylist();
         sleep(900);

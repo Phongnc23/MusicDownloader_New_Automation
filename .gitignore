@@ -27,6 +27,11 @@ reports/
 screenshots/
 logs/
 
+# Run logs & JVM crash dumps (rac, khong commit)
+*.log
+hs_err_pid*.log
+replay_pid*.log
+
 # OS
 .DS_Store
 Thumbs.db

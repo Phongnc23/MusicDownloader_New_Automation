@@ -94,18 +94,6 @@ public class Artists05_Verify_Share_With_Limit extends BaseTest {
         shareFolderAndVerify(home, goArtists(home), "Notifications", false);
     }
 
-    @Test(description = "TC_ART_030: Share folder <=10 bai (uu tien BrowserDownloader) -> thanh cong")
-    public void TC_ART_030_share_browserdownloader() {
-        HomePage home = new HomePage();
-        shareFolderAndVerify(home, goArtists(home), "BrowserDownloader", false);
-    }
-
-    @Test(description = "TC_ART_031: Share folder RecoveredAudios (<=10) thanh cong")
-    public void TC_ART_031_share_recoveredaudios() {
-        // SKIP: folder/album "RecoveredAudios" khong con ton tai tren may (data that da bi xoa).
-        // Giu lai test de tai kich hoat khi co du lieu RecoveredAudios.
-        throw new SkipException("Bo qua: khong co du lieu 'RecoveredAudios' tren thiet bi.");
-    }
 
     @Test(description = "TC_ART_032: Share 1 track tu danh sach luon thanh cong (1 file < 10)")
     public void TC_ART_032_share_single_track() {

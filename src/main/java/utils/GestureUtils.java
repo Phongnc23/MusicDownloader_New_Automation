@@ -33,6 +33,19 @@ public class GestureUtils {
         LogUtils.info("Tap tai toa do ({}, {})", x, y);
     }
 
+    /**
+     * Click tai (x, y) bang UiAutomator2 "mobile: clickGesture" (cap instrumentation, giong
+     * `adb input tap`). Dung cho cac widget Flutter KHONG nhan W3C pointer tap (vd icon download
+     * tren ket qua search / mini player) -> W3C tap "khong vao", clickGesture kich hoat duoc.
+     */
+    public static void clickGesture(AndroidDriver driver, int x, int y) {
+        java.util.Map<String, Object> args = new java.util.HashMap<>();
+        args.put("x", x);
+        args.put("y", y);
+        driver.executeScript("mobile: clickGesture", args);
+        LogUtils.info("clickGesture tai ({}, {})", x, y);
+    }
+
     /** Swipe tu (startX, startY) den (endX, endY) trong thoi gian durationMs. */
     public static void swipe(AndroidDriver driver, int startX, int startY,
                              int endX, int endY, int durationMs) {

@@ -84,6 +84,10 @@ public abstract class BaseTest {
                 try {
                     pages.HomePage h = new pages.HomePage();
                     if (h.isExitDialogDisplayed()) { h.tapCancelOnDialog(); Thread.sleep(300); continue; }
+                    // Drawer mo la case DUY NHAT ma BACK phan tac dung (bung exit dialog thay vi dong
+                    // drawer). Dong bang scrim tap TRUOC khi roi vao nhanh BACK -> tranh vong lap
+                    // "back -> exit dialog -> cancel" va tranh de drawer mo ro ri sang test sau.
+                    if (h.isDrawerOpen()) { h.closeMenuDrawer(); Thread.sleep(300); continue; }
                 } catch (Exception ignored) {}
                 // Co bottom nav -> man tabbed, test tu dieu huong duoc. SAN SANG (khong ep ve Home).
                 if (!driver.findElements(NAV_BAR).isEmpty()) return;

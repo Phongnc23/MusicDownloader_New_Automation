@@ -249,10 +249,20 @@ public class ArtistsPage extends BasePage {
         return d.contains("\n") && d.contains(ROW_MARK);
     }
     public void playDetailTrack(int index) { rows().get(index).click(); }
+    /** Menu 7-action cua track DANG mo: co Share track + Delete from device. */
+    public boolean isTrackMenuOpen() {
+        return existsImmediately(sShare) && existsImmediately(sDelete);
+    }
     public void openDetailTrackMenu(int index) {
         int cy = rowCenterY(index);
-        GestureUtils.tap(driver, ROW_MENU_X, cy);
-        log.info("Mo menu 3 cham track index {} (y={})", index, cy);
+        // Tap 3 cham track + VERIFY menu mo (toi 3 lan). Truoc day tap 1 lan: neu truot (row dich do
+        // churn) -> menu khong mo -> tapSheetShare bam trong -> waitShareSheetOpen fail -> retry.
+        for (int i = 0; i < 3; i++) {
+            GestureUtils.tap(driver, ROW_MENU_X, cy);
+            log.info("Mo menu 3 cham track index {} (y={}) - tap {}", index, cy, i + 1);
+            if (waitUntil(this::isTrackMenuOpen, 1500)) return;
+        }
+        log.info("Menu track index {} CHUA mo sau 3 tap", index);
     }
 
     // ===================== ALBUMS CAROUSEL (artist detail) =====================
@@ -305,7 +315,20 @@ public class ArtistsPage extends BasePage {
         }
         return false;
     }
-    public void closeShareSheet() { pressBack(); }
+    /**
+     * Dong share resolver. OPPO intentresolver: BACK doi luc KHONG dong -> uu tien tap nut "Huy"
+     * (resourceId oplus_resolve_close_icon), fallback BACK. VERIFY da dong (lap toi 4 lan) de tranh
+     * ro ri resolver sang test sau.
+     */
+    public void closeShareSheet() {
+        By cancel = AppiumBy.androidUIAutomator(
+                "new UiSelector().resourceId(\"com.android.intentresolver:id/oplus_resolve_close_icon\")");
+        for (int i = 0; i < 4 && isShareSheetOpen(); i++) {
+            if (existsImmediately(cancel)) { click(cancel); log.info("Tap Huy dong share resolver"); }
+            else { pressBack(); log.info("BACK dong share resolver (khong thay nut Huy)"); }
+            sleep(700);
+        }
+    }
 
     // ===================== SELECT MODE (nhan giu artist) =====================
     /** Nhan giu artist dau tien -> mo man select mode. */

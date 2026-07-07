@@ -2,6 +2,7 @@ package testcases.searchlibrary;
 
 import base.BaseTest;
 import com.aventstack.extentreports.Status;
+import constants.AppConstants;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AlbumsPage;
@@ -21,8 +22,9 @@ public class SearchLibrary05_Verify_Result_Navigation extends BaseTest {
     private static final String Q_TRACK = "import";
     private static final String Q_ALBUM = "Voice";
     private static final String ALBUM_NAME = "VoiceChanger";
-    private static final String Q_PLAYLIST = "QA_PL";
-    private static final String PLAYLIST_NAME = "QA_PL_6710";
+    // Playlist auto-fixture (tu tao neu chua co) - query la tien to cua ten.
+    private static final String PLAYLIST_NAME = AppConstants.AUTO_USER_PLAYLIST;   // "QAAUTO_PL"
+    private static final String Q_PLAYLIST = "QAAUTO";
 
     private SearchInLibraryPage goSearch(HomePage home) {
         SearchInLibraryPage s = new SearchInLibraryPage();
@@ -76,9 +78,12 @@ public class SearchLibrary05_Verify_Result_Navigation extends BaseTest {
     @Test(description = "TC_SL_021: Click playlist result mo Playlist Detail")
     public void TC_SL_021_click_playlist_result() {
         HomePage home = new HomePage();
-        SearchInLibraryPage s = goSearch(home);
         PlaylistsPage pl = new PlaylistsPage();
 
+        // Portable: TU TAO playlist neu chua co -> luon co ket qua playlist de search/click.
+        pl.ensureUserPlaylist(home, PLAYLIST_NAME);
+
+        SearchInLibraryPage s = goSearch(home);
         s.typeQuery(Q_PLAYLIST);
         home.sleep(1200);
         s.tapTabPlaylists();

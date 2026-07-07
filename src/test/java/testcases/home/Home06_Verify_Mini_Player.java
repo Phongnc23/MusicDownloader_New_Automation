@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.TracksPage;
 import report.ExtentReportManager;
 
 /**
@@ -18,14 +19,27 @@ import report.ExtentReportManager;
  */
 public class Home06_Verify_Mini_Player extends BaseTest {
 
-    /** Tra ve HomePage, skip neu mini player chua hien. */
+    /**
+     * Tra ve HomePage co mini player. KHONG con phu thuoc thu tu test:
+     * neu mini player chua hien -> tu phat 1 bai tu Tracks roi ve Home. Poll de tranh flaky
+     * (mini player render tre sau activateApp -> truoc day check 1 lan -> fail lan dau roi retry moi pass).
+     */
     private HomePage requireMiniPlayer() {
         HomePage home = new HomePage();
-        if (!home.isMiniPlayerDisplayed()) {
-            throw new SkipException(
-                    "Khong co track trong mini player. Phat 1 bai truoc khi chay Home06.");
+        // Mini player co the render tre -> poll vai giay truoc khi ket luan la chua co.
+        if (home.waitUntil(home::isMiniPlayerDisplayed, 4000)) return home;
+        // Van chua co (chua bai nao phat trong suite) -> phat 1 bai tu Tracks roi quay ve Home.
+        TracksPage tracks = new TracksPage();
+        home.tapNavTracks();
+        home.waitUntil(tracks::isTracksScreenDisplayed, 6000);
+        if (tracks.isTracksScreenDisplayed()) {
+            tracks.playTrack(0);
+            home.sleep(1800);
+            home.tapNavHome();
         }
-        return home;
+        if (home.waitUntil(home::isMiniPlayerDisplayed, 6000)) return home;
+        throw new SkipException(
+                "Khong the phat bai de hien mini player (thu vien rong?).");
     }
 
     @Test(description = "TC_HOME_018: Mini player hien ten bai dang phat")
@@ -39,19 +53,25 @@ public class Home06_Verify_Mini_Player extends BaseTest {
 
     @Test(description = "TC_HOME_019: Play/Pause trong mini player dung/phat dung")
     public void TC_HOME_019_play_pause() {
-        HomePage home = requireMiniPlayer();
+        HomePage home = new HomePage();
+        TracksPage tracks = new TracksPage();
+        // ROBUST: phat 1 bai DAI MOI tu dau (khong nhan mini player cua bai cu da ket o cuoi = 101%
+        // -> tap Play khong lam progress tang -> fail oan). Bai dai khong tu auto-next -> on dinh.
+        tracks.startFreshLongSongToHome(home);
+        Assert.assertTrue(home.isMiniPlayerDisplayed(), "Khong co mini player sau khi phat bai dai");
 
-        boolean advancing = home.isMiniPlayerProgressAdvancing(4000);
+        // Cua so 6s (thay 4s): bien an toan cho bai ~5 phut (1% ~3s) -> chac chan bat duoc % tang.
+        boolean advancing = home.isMiniPlayerProgressAdvancing(6000);
         if (!advancing) {
             ExtentReportManager.getTest().log(Status.INFO, "Dang khong phat -> tap de phat");
             home.tapMiniPlayerPlayPause();
-            advancing = home.isMiniPlayerProgressAdvancing(4000);
+            advancing = home.isMiniPlayerProgressAdvancing(6000);
         }
         Assert.assertTrue(advancing, "Khong phat duoc (progress khong tang khi play)");
         ExtentReportManager.getTest().log(Status.INFO, "Da xac nhan dang phat (progress tang)");
 
         home.tapMiniPlayerPlayPause();
-        boolean stillAdvancing = home.isMiniPlayerProgressAdvancing(4000);
+        boolean stillAdvancing = home.isMiniPlayerProgressAdvancing(6000);
         Assert.assertFalse(stillAdvancing, "Pause khong dung (progress van tang)");
         ExtentReportManager.getTest().log(Status.PASS, "Play/Pause hoat dong dung.");
 

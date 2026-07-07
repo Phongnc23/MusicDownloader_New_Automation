@@ -26,6 +26,7 @@
             <class name="testcases.menu.Menu03_Verify_Sleep_Timer"/>
             <class name="testcases.menu.Menu04_Verify_Settings_Screen"/>
             <class name="testcases.menu.Menu05_Verify_Exit_Flow"/>
+            <class name="testcases.menu.Menu06_Verify_Theme_Toggle"/>
         </classes>
     </test>
 

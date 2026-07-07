@@ -34,7 +34,19 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        ExtentReportManager.getTest().log(Status.PASS, "PASS: " + result.getMethod().getMethodName());
+        ExtentTest test = ExtentReportManager.getTest();
+        // Anh MINH CHUNG PASS: chup trang thai cuoi cua test (driver con song - listener chay TRUOC
+        // @AfterMethod quit driver). Nhung base64 da nen -> HTML tu chua.
+        String b64 = ScreenshotUtils.captureBase64Compressed();
+        if (b64 != null) {
+            try {
+                test.pass("Anh minh chung (PASS): " + result.getMethod().getMethodName(),
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(b64).build());
+            } catch (Exception e) {
+                log.warn("Khong dinh kem duoc anh minh chung PASS: {}", e.getMessage());
+            }
+        }
+        test.log(Status.PASS, "PASS: " + result.getMethod().getMethodName());
         ExtentReportManager.removeTest();
     }
 

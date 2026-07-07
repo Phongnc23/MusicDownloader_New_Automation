@@ -191,7 +191,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
             tracks.openTrackMenu(0); home.sleep(900);
             tracks.tapMenuAddPlaylist(); home.sleep(900);
         }
-        Assert.assertTrue(tracks.isPlaylistListed(name), "SAVE nhung khong thay playlist moi: " + name);
+        // List playlist virtualize (nhieu QA_PL_* cu) -> scroll tim playlist moi.
+        Assert.assertTrue(tracks.isPlaylistListedScroll(name), "SAVE nhung khong thay playlist moi: " + name);
         ExtentReportManager.getTest().log(Status.PASS, "Create new playlist: CANCEL khong tao, SAVE tao '" + name + "'.");
         home.pressBack();
     }

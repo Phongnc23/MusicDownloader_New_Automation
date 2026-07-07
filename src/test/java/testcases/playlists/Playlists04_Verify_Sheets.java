@@ -2,6 +2,7 @@ package testcases.playlists;
 
 import base.BaseTest;
 import com.aventstack.extentreports.Status;
+import constants.AppConstants;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -10,11 +11,11 @@ import report.ExtentReportManager;
 
 /**
  * Module: Playlists - Sheets (TC_PL_012..016).
- * USER_PL phai la 1 user playlist co thuc tren thiet bi (read-only, khong bi xoa boi suite).
+ * USER_PL: user playlist - TU TAO neu chua co (portable, khong phu thuoc data san tren may).
  */
 public class Playlists04_Verify_Sheets extends BaseTest {
 
-    private static final String USER_PL = "QA_PL_6710";
+    private static final String USER_PL = AppConstants.AUTO_USER_PLAYLIST;
 
     private PlaylistsPage goPlaylists(HomePage home) {
         PlaylistsPage pl = new PlaylistsPage();
@@ -26,10 +27,11 @@ public class Playlists04_Verify_Sheets extends BaseTest {
     @Test(description = "TC_PL_012: User playlist sheet 6 action (co Rename + Delete)")
     public void TC_PL_012_user_sheet_six_actions() {
         HomePage home = new HomePage();
-        PlaylistsPage pl = goPlaylists(home);
+        PlaylistsPage pl = new PlaylistsPage();
 
-        Assert.assertTrue(pl.isPlaylistListed(USER_PL), "Khong thay user playlist " + USER_PL
-                + " (sua hang so USER_PL cho khop thiet bi)");
+        // Portable: TU TAO user playlist neu chua co.
+        pl.ensureUserPlaylist(home, USER_PL);
+        Assert.assertTrue(pl.isPlaylistListed(USER_PL), "Khong tao/thay duoc user playlist " + USER_PL);
         pl.openPlaylistMenu(USER_PL);
         home.sleep(900);
         Assert.assertTrue(pl.isUserPlaylistSheetOpen(),
@@ -41,8 +43,10 @@ public class Playlists04_Verify_Sheets extends BaseTest {
     @Test(description = "TC_PL_013: Tap Scrim dong sheet")
     public void TC_PL_013_scrim_close_sheet() {
         HomePage home = new HomePage();
-        PlaylistsPage pl = goPlaylists(home);
+        PlaylistsPage pl = new PlaylistsPage();
 
+        // Portable: TU TAO user playlist neu chua co.
+        pl.ensureUserPlaylist(home, USER_PL);
         pl.openPlaylistMenu(USER_PL);
         home.sleep(900);
         Assert.assertTrue(pl.isSheetOpen(), "Sheet khong mo");

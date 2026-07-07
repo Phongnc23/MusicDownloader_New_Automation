@@ -413,10 +413,15 @@ public class AlbumsPage extends BasePage {
         return d.contains("\n") && d.contains(ROW_MARK);
     }
     public void playDetailTrack(int index) { rows().get(index).click(); }
+    /** Menu 7-action cua track (trong album detail) DANG mo: co Share + Delete (album 4-action khong co Delete). */
+    public boolean isTrackMenuOpen() {
+        return existsImmediately(sShare) && existsImmediately(sDelete);
+    }
     public void openDetailTrackMenu(int index) {
         int cy = rowCenterY(index);
-        GestureUtils.tap(driver, ROW_MENU_X, cy);
-        log.info("Mo menu 3 cham track index {} (y={})", index, cy);
+        // Tap 3 cham track + VERIFY menu 7-action mo (tap toi 3 lan). Truoc day tap 1 lan: neu truot
+        // (row dich do churn) -> menu khong mo -> tapSheetShare bam trong -> waitShareSheetOpen fail -> retry.
+        tapUntilOpen(ROW_MENU_X, cy, this::isTrackMenuOpen, "Mo menu 3 cham track index " + index + " (y=" + cy + ")");
     }
 
     // ===================== ADD TO PLAYLIST =====================
@@ -435,7 +440,21 @@ public class AlbumsPage extends BasePage {
         }
         return false;
     }
-    public void closeShareSheet() { pressBack(); }
+    /**
+     * Dong share resolver. OPPO intentresolver: BACK doi luc KHONG dong -> uu tien tap nut "Huy"
+     * (resourceId oplus_resolve_close_icon), fallback BACK. VERIFY da dong (lap toi 4 lan) de tranh
+     * ro ri resolver sang test sau (resolver con mo -> waitAppReady test sau khong thay bottom nav
+     * -> "Khong vao duoc man ...").
+     */
+    public void closeShareSheet() {
+        By cancel = AppiumBy.androidUIAutomator(
+                "new UiSelector().resourceId(\"com.android.intentresolver:id/oplus_resolve_close_icon\")");
+        for (int i = 0; i < 4 && isShareSheetOpen(); i++) {
+            if (existsImmediately(cancel)) { click(cancel); log.info("Tap Huy dong share resolver"); }
+            else { pressBack(); log.info("BACK dong share resolver (khong thay nut Huy)"); }
+            sleep(700);
+        }
+    }
 
     // ===================== SELECT MODE (nhan giu album) =====================
     public void longPressFirstAlbum() {

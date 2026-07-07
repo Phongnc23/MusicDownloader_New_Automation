@@ -55,6 +55,14 @@ public class MenuPage extends BasePage {
     private final By settingsLanguages = AppiumBy.androidUIAutomator(
             "new UiSelector().descriptionContains(\"Languages\")");
 
+    // ===== Dialog "Change language" (mo tu Settings > Languages) =====
+    // Chi KIEM TRA dialog mo roi Cancel - KHONG bao gio Apply (Apply doi ngon ngu that ->
+    // toan bo text UI doi -> hong locator tieng Anh cua CA suite).
+    private final By langDialogTitle = AppiumBy.accessibilityId("Change language");
+    private final By langApply       = AppiumBy.accessibilityId("Apply");
+    private final By langCancel      = AppiumBy.accessibilityId("Cancel");
+    private final By langOptEnglish  = AppiumBy.accessibilityId("English");
+
     // ===== Man Downloaded =====
     private final By downloadedTracksCount = AppiumBy.androidUIAutomator(
             "new UiSelector().descriptionContains(\"tracks\")");
@@ -111,6 +119,18 @@ public class MenuPage extends BasePage {
     public boolean isVersion9999Displayed() {
         return getDrawerVersionText().contains("9999");
     }
+
+    // ===== Theme toggle (dau drawer, 3 icon trai->phai: DARK(mat trang) | LIGHT(mat troi) | SYSTEM(nua vong)) =====
+    // DOM inner [135,299][540,380] chia 3 phan bang nhau -> tap theo TOA DO. (Da xac nhan bang screenshot:
+    // trai la mat trang = Dark, giua la mat troi = Light, phai la nua-vong-tron = System.)
+    private static final int THEME_Y = 340;
+    private static final int THEME_DARK_X   = 202;   // segment trai  (icon mat trang) = Dark
+    private static final int THEME_LIGHT_X  = 337;   // segment giua  (icon mat troi)  = Light
+    private static final int THEME_SYSTEM_X = 472;   // segment phai  (icon nua vong)  = System
+
+    public void tapThemeLight()  { GestureUtils.tap(driver, THEME_LIGHT_X,  THEME_Y); log.info("Chon theme Light"); }
+    public void tapThemeDark()   { GestureUtils.tap(driver, THEME_DARK_X,   THEME_Y); log.info("Chon theme Dark"); }
+    public void tapThemeSystem() { GestureUtils.tap(driver, THEME_SYSTEM_X, THEME_Y); log.info("Chon theme System"); }
 
     // =========================================================
     //  DRAWER - tap item
@@ -171,6 +191,67 @@ public class MenuPage extends BasePage {
 
     public boolean hasLanguagesDevice() {
         return getContentDesc(settingsLanguages).contains("Device");
+    }
+
+    public void tapLanguages() { click(settingsLanguages); log.info("Tap Settings: Languages"); }
+    public void tapRateUsSettings() { click(itemRateUs); log.info("Tap Settings: Rate us"); }
+
+    // ===== Toa do dialog Change language (DOM 1720x2408) - LANGUAGE-NEUTRAL =====
+    // Dung TOA DO vi khi da doi ngon ngu, moi text (ke ca title/Apply) doi -> accessibilityId
+    // tieng Anh khong con khop. Toa do va THU TU option KHONG doi theo ngon ngu.
+    private static final int LANG_ROW_X = 860,  LANG_ROW_Y = 384;    // hang "Languages" tren man Settings
+    private static final int LANG_OPT_X = 860;
+    private static final int LANG_OPT_DEVICE_Y  = 1548;             // row 0 (LUON dau tien) = English tren may nay
+    private static final int LANG_OPT_SPANISH_Y = 1845;            // row 3 (thu tu: Device,Arabic,English,Spanish,...)
+    private static final int LANG_APPLY_X = 1211, LANG_APPLY_Y = 2300;
+    private final By scrimAny = AppiumBy.accessibilityId("Scrim");  // ky thuat, khong dich -> detect dialog mo
+
+    /** Dialog Change language dang mo (title tieng Anh). Chi TRUE khi app DANG English. */
+    public boolean isChangeLanguageDialogOpen() {
+        return existsImmediately(langDialogTitle)
+                || (existsImmediately(langApply) && existsImmediately(langOptEnglish));
+    }
+
+    /** Mo dialog Languages bang TOA DO (tap hang Languages). BACK dong dialog cu neu dang mo. */
+    public void openLanguageDialog() {
+        if (existsImmediately(scrimAny)) { driver.navigate().back(); sleep(700); }
+        GestureUtils.tap(driver, LANG_ROW_X, LANG_ROW_Y);
+        log.info("Mo dialog Change language (toa do hang Languages)");
+    }
+
+    /** Doi sang Spanish (row 3 o dialog English) + Apply. Goi khi dialog DANG mo (English). */
+    public void changeLanguageToSpanish() {
+        GestureUtils.tap(driver, LANG_OPT_X, LANG_OPT_SPANISH_Y);
+        sleep(600);
+        GestureUtils.tap(driver, LANG_APPLY_X, LANG_APPLY_Y);
+        sleep(2500);
+        log.info("Chon Spanish + Apply");
+    }
+
+    /**
+     * BAT BUOC dua app ve English: chon "Device" (row 0 - LUON dau tien, = English tren may nay) + Apply.
+     * Idempotent + coordinate-based -> chay duoc du app dang o ngon ngu nao. GIA DINH dang o man Settings.
+     * @return true neu da xac nhan English (thay title "Change language").
+     */
+    public boolean ensureAppEnglish() {
+        for (int i = 0; i < 3; i++) {
+            openLanguageDialog();
+            sleep(1500);
+            if (existsImmediately(langDialogTitle)) {          // "Change language" (English) -> da English
+                driver.navigate().back(); sleep(700);           // dong dialog, khong doi gi
+                log.info("Da ve English (title 'Change language').");
+                return true;
+            }
+            GestureUtils.tap(driver, LANG_OPT_X, LANG_OPT_DEVICE_Y);   // row 0 = Device
+            sleep(600);
+            GestureUtils.tap(driver, LANG_APPLY_X, LANG_APPLY_Y);
+            sleep(2500);
+            log.info("Revert: chon Device (row 0) + Apply, lan {}", i + 1);
+        }
+        openLanguageDialog(); sleep(1500);
+        boolean ok = existsImmediately(langDialogTitle);
+        if (existsImmediately(scrimAny)) { driver.navigate().back(); sleep(700); }
+        return ok;
     }
 
     public boolean areAllSettingsItemsDisplayed() {

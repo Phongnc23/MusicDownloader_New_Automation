@@ -380,6 +380,28 @@ public class TracksPage extends BasePage {
         }
     }
 
+    /**
+     * Bat dau phat 1 bai DAI MOI tu dau roi ve Home (mini player san sang). Dung cho cac test doc
+     * trang thai play/pause tren mini player (vd TC_HOME_019): tranh nhan mini player cua BAI CU DA
+     * KET o cuoi (progress ~101%) -> tap Play khong lam progress tang -> fail oan.
+     * Dung sort "Date modified" (dua bai ~4:59 len dau): du DAI de khong tu auto-next trong luc test,
+     * nhung du NGAN de 1% nhich trong ~3s -> oracle 4-6s bat duoc progress tang. KHONG dung Duration
+     * dai nhat: file dai nhat co the la ban ghi/audiobook hang CHUC PHUT -> 1% mat vai chuc giay ->
+     * cua so oracle khong kip thay % tang -> bao "khong phat" oan.
+     */
+    public void startFreshLongSongToHome(HomePage home) {
+        home.tapNavTracks();
+        home.waitUntil(this::isTracksScreenDisplayed, 6000);
+        if (!isTracksScreenDisplayed()) { log.warn("startFreshLongSong: chua vao duoc Tracks"); return; }
+        setSortDateModifiedTop();
+        sleep(600);
+        playTrack(0);
+        sleep(2000);
+        home.tapNavHome();
+        home.waitUntil(home::isMiniPlayerDisplayed, 6000);
+        log.info("Da bat dau bai dai moi tu dau + ve Home (mini player san sang)");
+    }
+
     /** Option dang active (co mui ten con). */
     public boolean isSortActive(String name) {
         return existsImmediately(AppiumBy.xpath("//*[@content-desc='" + name + "']/*"));
@@ -447,6 +469,21 @@ public class TracksPage extends BasePage {
     public boolean isPlaylistListed(String name) {
         return existsImmediately(AppiumBy.androidUIAutomator(
                 "new UiSelector().descriptionContains(\"" + name + "\")"));
+    }
+
+    /**
+     * Tim playlist theo ten TRONG sheet add-to-playlist. List playlist VIRTUALIZE + cac QA_PL_* cu
+     * tich luy qua nhieu lan chay -> playlist moi co the off-screen -> phai SWIPE tim (existsImmediately
+     * moi lan). Vuot len de lo item ben duoi; toi 18 lan.
+     */
+    public boolean isPlaylistListedScroll(String name) {
+        if (isPlaylistListed(name)) return true;
+        for (int i = 0; i < 18; i++) {
+            GestureUtils.swipe(driver, 860, 1750, 860, 950, 450); // vuot len trong sheet
+            sleep(400);
+            if (isPlaylistListed(name)) return true;
+        }
+        return false;
     }
 
     /** So bai trong My Favorite doc tu "My Favorite\nN tracks". -1 neu khong thay. */
