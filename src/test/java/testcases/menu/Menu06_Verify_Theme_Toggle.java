@@ -51,7 +51,8 @@ public class Menu06_Verify_Theme_Toggle extends BaseTest {
         int bg = applyThemeAndReadBg(home, menu, 0);
         ExtentReportManager.getTest().log(Status.INFO, "Do sang nen (Light) = " + bg);
         Assert.assertTrue(bg >= BRIGHT_MIN, "Theme Light nhung nen khong sang (do sang=" + bg + ")");
-        ExtentReportManager.getTest().log(Status.PASS, "Theme Light OK (nen sang).");
+        // MINH CHUNG: chup Home nen sang (Light) NGAY luc nay, truoc khi tra ve Dark
+        ExtentReportManager.attachProof("Theme Light - Home nen sang (do sang=" + bg + ") - minh chung");
 
         applyThemeAndReadBg(home, menu, 1);   // tra ve Dark (mac dinh)
     }
@@ -77,8 +78,8 @@ public class Menu06_Verify_Theme_Toggle extends BaseTest {
         Assert.assertTrue(bg >= 0, "Khong doc duoc do sang sau khi chon System");
         Assert.assertTrue(bg <= DARK_MAX || bg >= BRIGHT_MIN,
                 "Theme System cho nen khong ro light/dark (do sang=" + bg + ")");
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Theme System OK (ap dung theme he thong, do sang=" + bg + ").");
+        // MINH CHUNG: chup Home theme System NGAY luc nay, truoc khi tra ve Dark
+        ExtentReportManager.attachProof("Theme System - ap dung theme he thong (do sang=" + bg + ") - minh chung");
 
         applyThemeAndReadBg(home, menu, 1);   // tra ve Dark (mac dinh)
     }

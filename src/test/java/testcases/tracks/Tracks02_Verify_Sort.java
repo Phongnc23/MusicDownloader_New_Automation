@@ -74,8 +74,8 @@ public class Tracks02_Verify_Sort extends BaseTest {
         Assert.assertTrue(tracks.isSortDialogOpen(), "Khong mo duoc Sort dialog");
         Assert.assertTrue(tracks.areAllSortOptionsDisplayed(), "Thieu option sort (can du 7)");
         Assert.assertTrue(tracks.isSortActive("Date modified"), "Indicator khong o 'Date modified'");
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Sort dialog mo, du 7 option, 'Date modified' active. So option = " + tracks.getSortOptionCount());
+        // MINH CHUNG: chup Sort dialog dang mo (7 option, Date modified active) truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog dang mo, 7 option, Date modified active - minh chung");
         tracks.closeSortViaX();
     }
 
@@ -106,7 +106,8 @@ public class Tracks02_Verify_Sort extends BaseTest {
 
         Assert.assertTrue(activeAfterSelect(home, tracks, "Title"), "Indicator khong sang o 'Title'");
         Assert.assertFalse(tracks.isSortActive("Date modified"), "Indicator van con o 'Date modified'");
-        ExtentReportManager.getTest().log(Status.PASS, "Indicator chuyen dung sang option duoc chon.");
+        // MINH CHUNG: chup Sort dialog dang mo voi indicator o 'Title' truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog dang mo, indicator o Title - minh chung");
         tracks.closeSortViaX();
     }
 
@@ -127,6 +128,8 @@ public class Tracks02_Verify_Sort extends BaseTest {
         HomePage home = new HomePage();
         TracksPage tracks = goTracks(home);
         Assert.assertTrue(activeAfterSelect(home, tracks, "Artist"), "Indicator khong o 'Artist'");
+        // MINH CHUNG: chup Sort dialog dang mo voi indicator o 'Artist' truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog dang mo, indicator o Artist - minh chung");
         tracks.closeSortViaX(); home.sleep(500);
         Assert.assertTrue(tracks.getRowCount() > 0, "List rong sau sort Artist");
         ExtentReportManager.getTest().log(Status.PASS,
@@ -138,6 +141,8 @@ public class Tracks02_Verify_Sort extends BaseTest {
         HomePage home = new HomePage();
         TracksPage tracks = goTracks(home);
         Assert.assertTrue(activeAfterSelect(home, tracks, "Album"), "Indicator khong o 'Album'");
+        // MINH CHUNG: chup Sort dialog dang mo voi indicator o 'Album' truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog dang mo, indicator o Album - minh chung");
         tracks.closeSortViaX(); home.sleep(500);
         Assert.assertTrue(tracks.getRowCount() > 0, "List rong sau sort Album");
         ExtentReportManager.getTest().log(Status.PASS, "Sort Album set indicator + list con item.");
@@ -148,6 +153,8 @@ public class Tracks02_Verify_Sort extends BaseTest {
         HomePage home = new HomePage();
         TracksPage tracks = goTracks(home);
         Assert.assertTrue(activeAfterSelect(home, tracks, "File name"), "Indicator khong o 'File name'");
+        // MINH CHUNG: chup Sort dialog dang mo voi indicator o 'File name' truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog dang mo, indicator o File name - minh chung");
         tracks.closeSortViaX(); home.sleep(500);
         Assert.assertTrue(tracks.getRowCount() > 0, "List rong sau sort File name");
         ExtentReportManager.getTest().log(Status.PASS,
@@ -174,6 +181,8 @@ public class Tracks02_Verify_Sort extends BaseTest {
         HomePage home = new HomePage();
         TracksPage tracks = goTracks(home);
         Assert.assertTrue(activeAfterSelect(home, tracks, "Date added"), "Indicator khong o 'Date added'");
+        // MINH CHUNG: chup Sort dialog dang mo voi indicator o 'Date added' truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog dang mo, indicator o Date added - minh chung");
         tracks.closeSortViaX(); home.sleep(500);
         Assert.assertTrue(tracks.getRowCount() > 0, "List rong sau sort Date added");
         ExtentReportManager.getTest().log(Status.PASS, "Sort Date added set indicator + list con item.");
@@ -184,6 +193,8 @@ public class Tracks02_Verify_Sort extends BaseTest {
         HomePage home = new HomePage();
         TracksPage tracks = goTracks(home);
         Assert.assertTrue(activeAfterSelect(home, tracks, "Date modified"), "Indicator khong o 'Date modified'");
+        // MINH CHUNG: chup Sort dialog dang mo voi indicator o 'Date modified' truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog dang mo, indicator o Date modified - minh chung");
         tracks.closeSortViaX(); home.sleep(500);
         Assert.assertTrue(tracks.getRowCount() > 0, "List rong sau sort Date modified");
         ExtentReportManager.getTest().log(Status.PASS, "Sort Date modified set indicator + list con item.");

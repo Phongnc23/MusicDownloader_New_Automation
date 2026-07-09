@@ -35,15 +35,18 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result) {
         ExtentTest test = ExtentReportManager.getTest();
-        // Anh MINH CHUNG PASS: chup trang thai cuoi cua test (driver con song - listener chay TRUOC
-        // @AfterMethod quit driver). Nhung base64 da nen -> HTML tu chua.
-        String b64 = ScreenshotUtils.captureBase64Compressed();
-        if (b64 != null) {
-            try {
-                test.pass("Anh minh chung (PASS): " + result.getMethod().getMethodName(),
-                        MediaEntityBuilder.createScreenCaptureFromBase64String(b64).build());
-            } catch (Exception e) {
-                log.warn("Khong dinh kem duoc anh minh chung PASS: {}", e.getMessage());
+        // Neu test da tu dinh anh minh chung dung trang thai ky vong (ExtentReportManager.attachProof)
+        // -> KHONG chup lai (tranh anh Home vo nghia sau khi case da back ve Home).
+        // Nguoc lai (test chua dinh proof) -> chup trang thai cuoi lam fallback. base64 da nen -> HTML tu chua.
+        if (!ExtentReportManager.hasProof()) {
+            String b64 = ScreenshotUtils.captureBase64Compressed();
+            if (b64 != null) {
+                try {
+                    test.pass("Anh minh chung (PASS): " + result.getMethod().getMethodName(),
+                            MediaEntityBuilder.createScreenCaptureFromBase64String(b64).build());
+                } catch (Exception e) {
+                    log.warn("Khong dinh kem duoc anh minh chung PASS: {}", e.getMessage());
+                }
             }
         }
         test.log(Status.PASS, "PASS: " + result.getMethod().getMethodName());
@@ -56,12 +59,14 @@ public class TestListener implements ITestListener {
         test.log(Status.FAIL, "FAIL: " + result.getMethod().getMethodName());
         test.log(Status.FAIL, result.getThrowable());
 
-        // Dinh kem screenshot
-        String path = ScreenshotUtils.capture(result.getMethod().getMethodName());
-        if (path != null) {
+        // Dinh kem screenshot luc FAIL bang base64 (da nen) -> NHUNG thang vao HTML
+        // giong anh PASS. Nho vay report la 1 file HTML TU CHUA hoan toan, gui may khac
+        // khong can kem thu muc screenshots/.
+        String b64 = ScreenshotUtils.captureBase64Compressed();
+        if (b64 != null) {
             try {
                 test.fail("Screenshot luc fail:",
-                        MediaEntityBuilder.createScreenCaptureFromPath(path).build());
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(b64).build());
             } catch (Exception e) {
                 log.warn("Khong dinh kem duoc screenshot vao report: {}", e.getMessage());
             }

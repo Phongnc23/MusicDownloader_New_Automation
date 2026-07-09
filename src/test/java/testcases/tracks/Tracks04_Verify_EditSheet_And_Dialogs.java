@@ -32,7 +32,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
         home.sleep(1000);
         Assert.assertTrue(tracks.isTrackMenuOpen(), "Khong mo duoc edit sheet");
         Assert.assertTrue(tracks.areAllMenuActionsDisplayed(), "Edit sheet thieu action (can du 7)");
-        ExtentReportManager.getTest().log(Status.PASS, "Edit sheet mo day du 7 action.");
+        // MINH CHUNG: chup edit sheet dang mo (7 action) truoc khi dong
+        ExtentReportManager.attachProof("Edit sheet dang mo day du 7 action - minh chung");
         tracks.closeMenuViaScrim();
     }
 
@@ -64,7 +65,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
         String title = tracks.getFirstTrackTitle();
         tracks.openTrackMenu(0); home.sleep(900);
         Assert.assertTrue(tracks.menuShowsTitle(title), "Sheet khong hien tieu de track da chon: " + title);
-        ExtentReportManager.getTest().log(Status.PASS, "Sheet hien dung track: " + title);
+        // MINH CHUNG: chup edit sheet dang hien track da chon truoc khi dong
+        ExtentReportManager.attachProof("Edit sheet hien dung track da chon - minh chung");
         tracks.closeMenuViaScrim();
     }
 
@@ -91,8 +93,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
         Assert.assertTrue(tracks.isRenameDialogOpen(), "Khong mo duoc Rename dialog");
         Assert.assertFalse(tracks.getRenameText().isEmpty(), "Rename khong prefill tieu de");
         Assert.assertTrue(tracks.getRenameCounter().matches("\\d+/60"), "Char count khong dung dang N/60");
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Rename prefilled=\"" + title + "\", counter=" + tracks.getRenameCounter());
+        // MINH CHUNG: chup Rename dialog (text prefilled + char count) truoc khi cancel
+        ExtentReportManager.attachProof("Rename dialog dang mo, text prefilled + char count - minh chung");
         tracks.tapRenameCancel();
     }
 
@@ -105,7 +107,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
         tracks.tapMenuFileInfo(); home.sleep(1000);
         Assert.assertTrue(tracks.isTrackInfoOpen(), "Khong mo duoc Track information");
         Assert.assertTrue(tracks.areAllInfoFieldsDisplayed(), "Thieu field thong tin");
-        ExtentReportManager.getTest().log(Status.PASS, "Track information hien day du fields.");
+        // MINH CHUNG: chup Track information dang mo (day du fields) truoc khi dong
+        ExtentReportManager.attachProof("Track information dang mo day du fields - minh chung");
         tracks.closeInfo();
     }
 
@@ -121,6 +124,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
         Assert.assertTrue(tracks.isDeleteTitleShown(), "Thieu tieu de 'Delete from device'");
         Assert.assertTrue(tracks.deleteMessageContains("Do you want to delete"),
                 "Confirm khong hoi dung dang single ('Do you want to delete the ...?')");
+        // MINH CHUNG: chup Delete confirm dialog (single) truoc khi CANCEL
+        ExtentReportManager.attachProof("Delete confirm dialog dang mo (single) - minh chung");
         tracks.tapDeleteCancel(); home.sleep(900);
         Assert.assertEquals(tracks.getTrackCount(), before, "CANCEL ma so track van doi");
         ExtentReportManager.getTest().log(Status.PASS, "Delete confirm hien dung, CANCEL khong xoa.");
@@ -156,7 +161,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
         // KHONG assert luon tang (se fail khi bai da san favorite).
         Assert.assertEquals(Math.abs(favAfter - favBefore), 1,
                 "Tap Heart nhung so My Favorite khong thay doi dung 1 (truoc=" + favBefore + " sau=" + favAfter + ")");
-        ExtentReportManager.getTest().log(Status.PASS, "Heart toggle My Favorite (thay doi 1 bai).");
+        // MINH CHUNG: chup Add to playlist dang mo voi so My Favorite sau toggle truoc khi dong
+        ExtentReportManager.attachProof("Add to playlist mo, so My Favorite sau toggle - minh chung");
         tracks.closeMenuViaBack();
     }
 
@@ -193,7 +199,8 @@ public class Tracks04_Verify_EditSheet_And_Dialogs extends BaseTest {
         }
         // List playlist virtualize (nhieu QA_PL_* cu) -> scroll tim playlist moi.
         Assert.assertTrue(tracks.isPlaylistListedScroll(name), "SAVE nhung khong thay playlist moi: " + name);
-        ExtentReportManager.getTest().log(Status.PASS, "Create new playlist: CANCEL khong tao, SAVE tao '" + name + "'.");
+        // MINH CHUNG: chup Add to playlist dang mo voi playlist moi vua tao truoc khi back
+        ExtentReportManager.attachProof("Add to playlist mo, playlist moi da tao xuat hien - minh chung");
         home.pressBack();
     }
 }

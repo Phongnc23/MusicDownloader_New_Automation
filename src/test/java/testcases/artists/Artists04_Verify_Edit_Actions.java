@@ -62,7 +62,8 @@ public class Artists04_Verify_Edit_Actions extends BaseTest {
         artists.tapSheetAddList();
         home.sleep(1000);
         Assert.assertTrue(artists.isAddToPlaylistOpen(), "Khong mo duoc dialog Add to playlist");
-        ExtentReportManager.getTest().log(Status.PASS, "Add to playlist mo dialog.");
+        // MINH CHUNG: dialog Add to playlist dang mo, chup truoc khi back
+        ExtentReportManager.attachProof("Dialog Add to playlist dang mo - minh chung");
         home.pressBack();
     }
 

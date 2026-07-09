@@ -113,7 +113,8 @@ public class Menu04_Verify_Settings_Screen extends BaseTest {
         home.sleep(2000);
         ExtentReportManager.getTest().log(Status.INFO, "Package hien tai: " + getDriver().getCurrentPackage());
         Assert.assertTrue(menu.isOnExternalApp(), "Rate us khong roi app sang Play Store / app ngoai");
-        ExtentReportManager.getTest().log(Status.PASS, "Settings > Rate us mo app ngoai OK.");
+        // MINH CHUNG: chup app ngoai (Play Store) NGAY luc nay, truoc khi back ve Settings
+        ExtentReportManager.attachProof("Settings > Rate us mo app ngoai (Play Store) - minh chung");
         backToSettings(home, menu);
     }
 
@@ -127,7 +128,8 @@ public class Menu04_Verify_Settings_Screen extends BaseTest {
         home.sleep(1500);
         Assert.assertTrue(menu.isPrivacyPolicyScreenDisplayed(),
                 "Privacy policy khong mo WebView");
-        ExtentReportManager.getTest().log(Status.PASS, "Settings > Privacy policy mo WebView OK.");
+        // MINH CHUNG: chup trang Privacy policy (WebView) NGAY luc nay, truoc khi back ve Settings
+        ExtentReportManager.attachProof("Settings > Privacy policy mo WebView - minh chung");
         backToSettings(home, menu);
     }
 
@@ -141,7 +143,8 @@ public class Menu04_Verify_Settings_Screen extends BaseTest {
         home.sleep(2000);
         ExtentReportManager.getTest().log(Status.INFO, "Package hien tai: " + getDriver().getCurrentPackage());
         Assert.assertTrue(menu.isOnShareSheet(), "Share app khong mo share sheet");
-        ExtentReportManager.getTest().log(Status.PASS, "Settings > Share app mo share sheet OK.");
+        // MINH CHUNG: chup Android share sheet NGAY luc nay, truoc khi back ve Settings
+        ExtentReportManager.attachProof("Settings > Share app mo Android share sheet - minh chung");
         backToSettings(home, menu);
     }
 

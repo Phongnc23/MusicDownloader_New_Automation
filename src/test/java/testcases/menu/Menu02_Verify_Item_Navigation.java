@@ -48,7 +48,8 @@ public class Menu02_Verify_Item_Navigation extends BaseTest {
         ExtentReportManager.getTest().log(Status.INFO, "Package hien tai: " + getDriver().getCurrentPackage());
         Assert.assertTrue(menu.isOnSystemSettings(),
                 "Khong mo app he thong Settings (" + AppConstants.SETTINGS_PACKAGE + ")");
-        ExtentReportManager.getTest().log(Status.PASS, "Equalizer mo Settings he thong OK.");
+        // MINH CHUNG: chup man Settings he thong NGAY luc nay, truoc khi quay ve Home
+        ExtentReportManager.attachProof("Equalizer mo Settings he thong (Dolby Atmos) - minh chung");
         returnToHomeFromExternal(home);
     }
 
@@ -61,7 +62,8 @@ public class Menu02_Verify_Item_Navigation extends BaseTest {
         menu.tapDownloaded();
         home.sleep(1500);
         Assert.assertTrue(menu.isDownloadedScreenDisplayed(), "Khong mo man Downloaded");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo man Downloaded OK.");
+        // MINH CHUNG: chup man Downloaded NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Downloaded trong app - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong ve duoc Home");
@@ -77,7 +79,8 @@ public class Menu02_Verify_Item_Navigation extends BaseTest {
         home.sleep(1500);
         Assert.assertTrue(menu.isPrivacyPolicyScreenDisplayed(),
                 "Khong mo trang Privacy policy (khong thay WebView)");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo trang Privacy policy OK.");
+        // MINH CHUNG: chup trang Privacy policy (WebView) NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo trang Privacy policy (WebView) - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong ve duoc Home");
@@ -93,7 +96,8 @@ public class Menu02_Verify_Item_Navigation extends BaseTest {
         home.sleep(2000);
         ExtentReportManager.getTest().log(Status.INFO, "Package hien tai: " + getDriver().getCurrentPackage());
         Assert.assertTrue(menu.isOnExternalApp(), "Khong roi app sang Play Store / app ngoai");
-        ExtentReportManager.getTest().log(Status.PASS, "Rate us mo app ngoai (Play Store) OK.");
+        // MINH CHUNG: chup app ngoai (Play Store) NGAY luc nay, truoc khi quay ve Home
+        ExtentReportManager.attachProof("Rate us mo app ngoai (Play Store) - minh chung");
         returnToHomeFromExternal(home);
     }
 
@@ -108,7 +112,8 @@ public class Menu02_Verify_Item_Navigation extends BaseTest {
         ExtentReportManager.getTest().log(Status.INFO, "Package hien tai: " + getDriver().getCurrentPackage());
         Assert.assertTrue(menu.isOnShareSheet(),
                 "Khong mo share sheet (" + AppConstants.INTENT_RESOLVER_PACKAGE + ")");
-        ExtentReportManager.getTest().log(Status.PASS, "Share app mo share sheet OK.");
+        // MINH CHUNG: chup Android share sheet NGAY luc nay, truoc khi quay ve Home
+        ExtentReportManager.attachProof("Share app mo Android share sheet - minh chung");
         returnToHomeFromExternal(home);
     }
 
@@ -121,7 +126,8 @@ public class Menu02_Verify_Item_Navigation extends BaseTest {
         menu.tapSettings();
         home.sleep(1500);
         Assert.assertTrue(menu.isSettingsScreenDisplayed(), "Khong mo man Settings");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo man Settings OK.");
+        // MINH CHUNG: chup man Settings NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Settings trong app - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong ve duoc Home");

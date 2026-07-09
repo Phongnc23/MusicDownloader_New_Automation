@@ -29,7 +29,8 @@ public class Artists03_Verify_Edit_Sheet extends BaseTest {
         artists.openArtistMenuFromList();
         home.sleep(1000);
         Assert.assertTrue(artists.isFourActionSheetOpen(), "Khong mo duoc edit sheet artist");
-        ExtentReportManager.getTest().log(Status.PASS, "Click 3 cham -> edit sheet mo.");
+        // MINH CHUNG: edit sheet artist dang mo, chup truoc khi dong
+        ExtentReportManager.attachProof("Edit sheet artist dang mo - minh chung");
         artists.closeSheetViaBack();
     }
 
@@ -43,7 +44,8 @@ public class Artists03_Verify_Edit_Sheet extends BaseTest {
         Assert.assertTrue(artists.areFourActionsDisplayed(), "Thieu 1 trong 4 action (Play/Queue/Playlist/Share)");
         Assert.assertTrue(artists.sheetHasNoExtraActions(),
                 "Sheet artist khong duoc co Rename/Delete/File information");
-        ExtentReportManager.getTest().log(Status.PASS, "Sheet artist chi co 4 action.");
+        // MINH CHUNG: sheet artist chi co 4 action, chup truoc khi dong
+        ExtentReportManager.attachProof("Sheet artist 4 action (khong Rename/Delete/File info) - minh chung");
         artists.closeSheetViaBack();
     }
 
@@ -59,7 +61,8 @@ public class Artists03_Verify_Edit_Sheet extends BaseTest {
         Assert.assertTrue(sheetCount > 0, "Sheet khong hien so bai");
         Assert.assertEquals(sheetCount, cardCount, "So bai tren sheet (" + sheetCount
                 + ") khac so tracks tren card (" + cardCount + ")");
-        ExtentReportManager.getTest().log(Status.PASS, "Sheet hien dung artist info: " + sheetCount + " songs.");
+        // MINH CHUNG: sheet hien dung artist info (N songs), chup truoc khi dong
+        ExtentReportManager.attachProof("Sheet artist hien info " + sheetCount + " songs - minh chung");
         artists.closeSheetViaBack();
     }
 

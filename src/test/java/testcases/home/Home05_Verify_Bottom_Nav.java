@@ -22,7 +22,7 @@ public class Home05_Verify_Bottom_Nav extends BaseTest {
         home.tapNavTracks();
         home.sleep(1200);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong chuyen sang Tracks");
-        ExtentReportManager.getTest().log(Status.PASS, "Chuyen tab Tracks OK.");
+        ExtentReportManager.attachProof("Da chuyen sang tab Tracks - minh chung");
 
         home.tapNavHome();
         home.sleep(1200);
@@ -35,7 +35,7 @@ public class Home05_Verify_Bottom_Nav extends BaseTest {
         home.tapNavArtists();
         home.sleep(1200);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong chuyen sang Artists");
-        ExtentReportManager.getTest().log(Status.PASS, "Chuyen tab Artists OK.");
+        ExtentReportManager.attachProof("Da chuyen sang tab Artists - minh chung");
 
         home.tapNavHome();
         home.sleep(1200);
@@ -48,7 +48,7 @@ public class Home05_Verify_Bottom_Nav extends BaseTest {
         home.tapNavAlbums();
         home.sleep(1200);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong chuyen sang Albums");
-        ExtentReportManager.getTest().log(Status.PASS, "Chuyen tab Albums OK.");
+        ExtentReportManager.attachProof("Da chuyen sang tab Albums - minh chung");
 
         home.tapNavHome();
         home.sleep(1200);
@@ -61,7 +61,7 @@ public class Home05_Verify_Bottom_Nav extends BaseTest {
         home.tapNavPlaylists();
         home.sleep(1200);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong chuyen sang Playlists");
-        ExtentReportManager.getTest().log(Status.PASS, "Chuyen tab Playlists OK.");
+        ExtentReportManager.attachProof("Da chuyen sang tab Playlists - minh chung");
 
         home.tapNavHome();
         home.sleep(1200);
@@ -85,6 +85,7 @@ public class Home05_Verify_Bottom_Nav extends BaseTest {
         home.tapNavArtists(); home.sleep(1000);
         home.tapNavAlbums();  home.sleep(1000);
         Assert.assertFalse(home.isHomeDisplayed(), "Dang o tab khac ma van thay Home");
+        ExtentReportManager.attachProof("Da duyet qua nhieu tab (dang o Albums) - minh chung");
 
         home.tapNavHome();
         home.sleep(1200);

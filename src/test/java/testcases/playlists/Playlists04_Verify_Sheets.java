@@ -36,6 +36,8 @@ public class Playlists04_Verify_Sheets extends BaseTest {
         home.sleep(900);
         Assert.assertTrue(pl.isUserPlaylistSheetOpen(),
                 "Sheet user playlist khong du 6 action (Play/Queue/Playlist/Rename/Share/Delete)");
+        // MINH CHUNG: chup sheet user playlist (6 action) dang mo, truoc khi dong
+        ExtentReportManager.attachProof("User playlist sheet 6 action dang mo - minh chung");
         pl.closeSheetViaBack();
         ExtentReportManager.getTest().log(Status.PASS, "User playlist sheet 6 action OK.");
     }
@@ -65,6 +67,8 @@ public class Playlists04_Verify_Sheets extends BaseTest {
         home.sleep(900);
         Assert.assertTrue(pl.isLocalSheetOpen(), "Recently Played khong phai local sheet (co Rename/Delete?)");
         Assert.assertTrue(pl.sheetHasClearRecentlyPlayed(), "Thieu 'Clear recently played'");
+        // MINH CHUNG: chup local sheet Recently Played (co Clear) dang mo, truoc khi dong
+        ExtentReportManager.attachProof("Recently Played local sheet co 'Clear recently played' dang mo - minh chung");
         pl.closeSheetViaBack();
         ExtentReportManager.getTest().log(Status.PASS, "Recently Played local sheet + Clear OK.");
     }
@@ -78,6 +82,8 @@ public class Playlists04_Verify_Sheets extends BaseTest {
         home.sleep(900);
         Assert.assertTrue(pl.isLocalSheetOpen(), "My Favorite khong phai local sheet (co Rename/Delete?)");
         Assert.assertTrue(pl.sheetHasClearMyFavorite(), "Thieu 'Clear my favorite'");
+        // MINH CHUNG: chup local sheet My Favorite (co Clear my favorite) dang mo, truoc khi dong
+        ExtentReportManager.attachProof("My Favorite local sheet co 'Clear my favorite' dang mo - minh chung");
         pl.closeSheetViaBack();
         ExtentReportManager.getTest().log(Status.PASS, "My Favorite local sheet + Clear my favorite OK.");
     }
@@ -94,6 +100,8 @@ public class Playlists04_Verify_Sheets extends BaseTest {
         home.sleep(1200);
         Assert.assertTrue(pl.isAddToPlaylistPickerOpen(),
                 "Khong mo duoc picker 'Add to playlist' (Create new + danh sach playlist)");
+        // MINH CHUNG: chup picker 'Add to playlist' dang mo, truoc khi dong
+        ExtentReportManager.attachProof("Picker 'Add to playlist' dang mo (Create new + danh sach) - minh chung");
         pl.closeSheetViaBack();
         home.sleep(500);
         ExtentReportManager.getTest().log(Status.PASS, "Add to playlist mo picker OK.");

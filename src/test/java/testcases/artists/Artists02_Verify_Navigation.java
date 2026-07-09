@@ -50,7 +50,8 @@ public class Artists02_Verify_Navigation extends BaseTest {
         artists.tapDetailMenu();
         home.sleep(1000);
         Assert.assertTrue(artists.isFourActionSheetOpen(), "Nut 3 cham khong mo duoc sheet");
-        ExtentReportManager.getTest().log(Status.PASS, "Artist Detail co header + back + 3 cham (mo duoc sheet).");
+        // MINH CHUNG: sheet mo tu 3 cham tren Artist Detail, chup truoc khi dong
+        ExtentReportManager.attachProof("Artist Detail + edit sheet dang mo - minh chung");
         artists.closeSheetViaBack();
     }
 
@@ -113,7 +114,8 @@ public class Artists02_Verify_Navigation extends BaseTest {
         artists.tapArtistDetailTracksSort();
         home.sleep(900);
         Assert.assertTrue(artists.isSortDialogOpen(), "Nut sort section Tracks khong mo duoc dialog");
-        ExtentReportManager.getTest().log(Status.PASS, "Nut sort section Tracks hoat dong.");
+        // MINH CHUNG: Sort dialog mo tu section Tracks, chup truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog mo tu section Tracks - minh chung");
         artists.closeSortViaBack();
     }
 
@@ -139,7 +141,8 @@ public class Artists02_Verify_Navigation extends BaseTest {
         Assert.assertTrue(tracksMenu.isTrackMenuOpen(), "Khong mo duoc menu track");
         Assert.assertTrue(tracksMenu.areAllMenuActionsDisplayed(),
                 "Menu track khong du 7 action (khac artist 4 action)");
-        ExtentReportManager.getTest().log(Status.PASS, "Track edit trong artist = sheet 7 action.");
+        // MINH CHUNG: menu track 7 action mo trong Artist Detail, chup truoc khi dong
+        ExtentReportManager.attachProof("Menu track 7 action mo trong Artist Detail - minh chung");
         tracksMenu.closeMenuViaBack();
     }
 }

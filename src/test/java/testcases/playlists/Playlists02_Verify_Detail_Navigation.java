@@ -34,6 +34,8 @@ public class Playlists02_Verify_Detail_Navigation extends BaseTest {
         Assert.assertTrue(pl.isPlaylistDetailOpen("My Favorite"), "Khong mo duoc My Favorite detail");
         Assert.assertTrue(pl.isDetailWithControlsOpen(), "Thieu Play all / Shuffle");
         Assert.assertTrue(pl.getDetailHeroTrackCount() > 0, "Hero khong co so track");
+        // MINH CHUNG: chup detail My Favorite dang mo, truoc khi Back ve list
+        ExtentReportManager.attachProof("My Favorite detail dang mo (Play all/Shuffle + hero count) - minh chung");
         pl.tapDetailBack();
         home.sleep(1200);
         Assert.assertTrue(pl.isPlaylistsScreenDisplayed(), "Back khong ve duoc Playlists");

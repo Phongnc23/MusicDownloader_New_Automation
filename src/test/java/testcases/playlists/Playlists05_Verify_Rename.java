@@ -41,6 +41,8 @@ public class Playlists05_Verify_Rename extends BaseTest {
         Assert.assertTrue(pl.isCreateDialogOpen(), "Khong mo duoc Rename dialog");
         Assert.assertEquals(pl.getNameFieldText(), name, "Rename dialog khong prefill ten cu");
 
+        // MINH CHUNG: chup Rename dialog dang mo, prefill ten cu, truoc khi CANCEL
+        ExtentReportManager.attachProof("Rename dialog dang mo, prefill ten cu - minh chung");
         pl.tapDialogCancel();
         home.sleep(900);
         Assert.assertTrue(pl.isPlaylistListed(name), "CANCEL nhung ten bi doi/mat");
@@ -78,6 +80,9 @@ public class Playlists05_Verify_Rename extends BaseTest {
         Assert.assertTrue(pl.isPlaylistListed(dst), "SAVE nhung khong thay ten moi");
         Assert.assertFalse(pl.isPlaylistListed(src), "SAVE nhung ten cu van con");
         ExtentReportManager.getTest().log(Status.INFO, "Rename: " + src + " -> " + dst);
+
+        // MINH CHUNG: chup list co ten moi (ten cu da mat), truoc khi cleanup XOA THAT
+        ExtentReportManager.attachProof("Playlist da doi sang ten moi trong list - minh chung");
 
         // Cleanup XOA THAT (ten moi)
         boolean deleted = pl.deletePlaylistReal(dst);

@@ -29,7 +29,8 @@ public class Home07_Verify_Exit_Dialog extends BaseTest {
 
         Assert.assertTrue(home.isExitDialogDisplayed(),
                 "Khong hien dialog xac nhan thoat (title/Exit/Cancel)");
-        ExtentReportManager.getTest().log(Status.PASS, "Dialog xac nhan thoat hien dung.");
+        // MINH CHUNG: chup dialog xac nhan thoat NGAY luc nay, truoc khi Cancel
+        ExtentReportManager.attachProof("Dialog xac nhan thoat dang hien - minh chung");
 
         // Don dep: Cancel de o lai Home (khong de session ket o dialog)
         home.tapCancelOnDialog();

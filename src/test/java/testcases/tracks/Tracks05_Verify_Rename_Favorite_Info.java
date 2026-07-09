@@ -63,7 +63,8 @@ public class Tracks05_Verify_Rename_Favorite_Info extends BaseTest {
         Assert.assertTrue(tracks.getRenameText().length() <= 60, "Khong gioi han 60 ky tu (len="
                 + tracks.getRenameText().length() + ")");
         Assert.assertEquals(tracks.getRenameCounter(), "60/60", "Counter khong dung 60/60 khi vuot gioi han");
-        ExtentReportManager.getTest().log(Status.PASS, "Clear OK, char count real-time, gioi han 60 ky tu.");
+        // MINH CHUNG: chup Rename dialog da clear + gioi han 60/60 truoc khi cancel
+        ExtentReportManager.attachProof("Rename dialog: da clear va gioi han 60 ky tu - minh chung");
         tracks.tapRenameCancel();
     }
 
@@ -77,7 +78,8 @@ public class Tracks05_Verify_Rename_Favorite_Info extends BaseTest {
         tracks.clearRenameViaX(); home.sleep(600);
         tracks.tapRenameSave(); home.sleep(900);
         Assert.assertTrue(tracks.isRenameDialogOpen(), "SAVE input rong nhung dialog da dong (khong chan)");
-        ExtentReportManager.getTest().log(Status.PASS, "SAVE input rong bi validation chan (dialog van mo).");
+        // MINH CHUNG: chup Rename dialog van mo (SAVE rong bi chan) truoc khi cancel
+        ExtentReportManager.attachProof("Rename SAVE rong bi chan, dialog van mo - minh chung");
         tracks.tapRenameCancel();
     }
 
@@ -93,6 +95,8 @@ public class Tracks05_Verify_Rename_Favorite_Info extends BaseTest {
         Assert.assertEquals(tracks.getFirstTrackTitle(), newName,
                 "Sau SAVE title moi khong len dau list");
         ExtentReportManager.getTest().log(Status.INFO, "Da doi ten thanh: " + newName);
+        // MINH CHUNG: chup list co title moi len dau truoc khi khoi phuc ten cu
+        ExtentReportManager.attachProof("Title moi sau rename da len dau list - minh chung");
 
         // Khoi phuc ten cu (bai vua sua dang o index 0)
         renameRow(home, tracks, 0, orig);
@@ -113,6 +117,8 @@ public class Tracks05_Verify_Rename_Favorite_Info extends BaseTest {
         Assert.assertTrue(titles.contains(newName) || tracks.getFirstTrackTitle().equals(newName),
                 "Khong thay title tieng Viet/dac biet sau SAVE");
         ExtentReportManager.getTest().log(Status.INFO, "Da doi ten thanh: " + newName);
+        // MINH CHUNG: chup list co title tieng Viet/dac biet truoc khi khoi phuc
+        ExtentReportManager.attachProof("Title tieng Viet/dac biet sau rename - minh chung");
 
         renameRow(home, tracks, 0, orig);
         Assert.assertEquals(tracks.getFirstTrackTitle(), orig, "Khong khoi phuc duoc ten cu");
@@ -148,7 +154,8 @@ public class Tracks05_Verify_Rename_Favorite_Info extends BaseTest {
         tracks.tapMenuFileInfo(); home.sleep(1000);
         Assert.assertTrue(tracks.areAllInfoFieldsDisplayed(), "Thieu field thong tin");
         Assert.assertTrue(tracks.infoHasFilePathValue(), "File path khong co gia tri /storage/...");
-        ExtentReportManager.getTest().log(Status.PASS, "File info day du fields + co gia tri File path.");
+        // MINH CHUNG: chup Track information (day du fields + gia tri File path) truoc khi dong
+        ExtentReportManager.attachProof("Track information day du fields + gia tri File path - minh chung");
         tracks.closeInfo();
     }
 }

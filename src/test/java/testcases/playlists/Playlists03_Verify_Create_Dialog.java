@@ -38,6 +38,8 @@ public class Playlists03_Verify_Create_Dialog extends BaseTest {
         Assert.assertFalse(pl.isCharCounterZero(), "Counter khong cap nhat sau khi nhap");
         ExtentReportManager.getTest().log(Status.INFO, "Counter sau khi nhap 'ABC': " + pl.getCharCounter());
 
+        // MINH CHUNG: chup Create dialog dang mo voi counter da cap nhat, truoc khi Dismiss
+        ExtentReportManager.attachProof("Create dialog dang mo, counter da cap nhat sau khi nhap - minh chung");
         pl.dismissDialog();
         home.sleep(900);
         Assert.assertFalse(pl.isCreateDialogOpen(), "Dismiss khong dong duoc dialog");
@@ -76,6 +78,9 @@ public class Playlists03_Verify_Create_Dialog extends BaseTest {
         Assert.assertTrue(pl.isPlaylistListed(name), "SAVE nhung khong thay playlist moi");
         Assert.assertEquals(pl.getUserPlaylistCount(), before + 1, "Count khong tang sau khi tao");
         ExtentReportManager.getTest().log(Status.INFO, "Da tao playlist: " + name + " (count " + before + "->" + (before + 1) + ")");
+
+        // MINH CHUNG: chup playlist moi da xuat hien trong list, truoc khi cleanup XOA THAT
+        ExtentReportManager.attachProof("Playlist moi vua tao da hien trong list - minh chung");
 
         // Cleanup: XOA THAT playlist vua tao
         boolean deleted = pl.deletePlaylistReal(name);

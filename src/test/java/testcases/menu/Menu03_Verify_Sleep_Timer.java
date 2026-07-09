@@ -62,7 +62,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
         Assert.assertTrue(menu.isSleepTimerInitial(),
                 "Dialog khong o INITIAL (thieu option/Set timer)");
         Assert.assertFalse(menu.isSleepTimerActive(), "INITIAL ma da co countdown/Reset");
-        ExtentReportManager.getTest().log(Status.PASS, "Sleep timer mo o INITIAL dung.");
+        // MINH CHUNG: chup dialog Sleep timer o INITIAL NGAY luc nay, truoc khi Cancel dong
+        ExtentReportManager.attachProof("Sleep timer dialog o INITIAL (6 option + Set timer) - minh chung");
 
         menu.tapCancelSleepDialog();
     }
@@ -93,7 +94,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
 
         reopenSleep(home, menu);
         Assert.assertTrue(menu.isSleepTimerActive(), "Timer khong duoc kich hoat (khong thay ACTIVE)");
-        ExtentReportManager.getTest().log(Status.PASS, "Set timer 15 phut OK, timer dang chay.");
+        // MINH CHUNG: chup dialog ACTIVE (timer 15 phut dang chay) NGAY luc nay, truoc khi reset+dong
+        ExtentReportManager.attachProof("Set timer 15 phut OK, timer dang chay (ACTIVE) - minh chung");
 
         resetAndClose(home, menu);
     }
@@ -109,7 +111,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
         String timer = menu.getActiveTimerText();
         ExtentReportManager.getTest().log(Status.INFO, "Countdown: " + timer);
         Assert.assertTrue(timer.contains("Timer:"), "Khong hien countdown 'Timer: Xm Ys'");
-        ExtentReportManager.getTest().log(Status.PASS, "ACTIVE hien countdown + Reset dung.");
+        // MINH CHUNG: chup trang thai ACTIVE (countdown + nut Reset) NGAY luc nay, truoc khi reset+dong
+        ExtentReportManager.attachProof("Trang thai ACTIVE hien countdown + nut Reset - minh chung");
 
         resetAndClose(home, menu);
     }
@@ -128,7 +131,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
         Assert.assertTrue(menu.isSleepTimerDialogOpen(), "Dialog dong sau Reset (phai van mo)");
         Assert.assertTrue(menu.isSleepTimerInitial(), "Sau Reset khong ve INITIAL");
         Assert.assertFalse(menu.isSleepTimerActive(), "Sau Reset van con countdown/Reset");
-        ExtentReportManager.getTest().log(Status.PASS, "Reset giu dialog mo, ve INITIAL dung.");
+        // MINH CHUNG: chup dialog van mo va da ve INITIAL sau Reset, truoc khi Cancel dong
+        ExtentReportManager.attachProof("Reset o ACTIVE -> dialog van mo, ve INITIAL - minh chung");
 
         menu.tapCancelSleepDialog();
     }
@@ -142,7 +146,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
         menu.tapCustom();
         home.sleep(1000);
         Assert.assertTrue(menu.isCustomDialogOpen(), "Khong mo Custom sleep timer dialog");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo Custom dialog OK.");
+        // MINH CHUNG: chup Custom sleep timer dialog NGAY luc nay, truoc khi Cancel+dong
+        ExtentReportManager.attachProof("Da mo Custom sleep timer dialog - minh chung");
 
         menu.tapCustomCancel();
         home.sleep(600);
@@ -163,7 +168,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
         home.sleep(800);
         Assert.assertFalse(menu.isCustomDialogOpen(), "Custom dialog khong dong sau Cancel");
         Assert.assertTrue(menu.isSleepTimerInitial(), "Khong quay lai Sleep timer INITIAL");
-        ExtentReportManager.getTest().log(Status.PASS, "Cancel Custom -> ve Sleep timer INITIAL OK.");
+        // MINH CHUNG: chup da quay lai Sleep timer INITIAL sau khi Cancel Custom, truoc khi dong
+        ExtentReportManager.attachProof("Cancel Custom -> ve Sleep timer INITIAL - minh chung");
 
         menu.tapCancelSleepDialog();
     }
@@ -192,7 +198,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
 
         reopenSleep(home, menu);
         Assert.assertTrue(menu.isSleepTimerActive(), "Custom timer 25 phut khong duoc set");
-        ExtentReportManager.getTest().log(Status.PASS, "Custom timer 25 phut set OK.");
+        // MINH CHUNG: chup dialog ACTIVE (custom 25 phut da set) NGAY luc nay, truoc khi reset+dong
+        ExtentReportManager.attachProof("Custom timer 25 phut da set (ACTIVE) - minh chung");
 
         resetAndClose(home, menu);
     }
@@ -216,7 +223,8 @@ public class Menu03_Verify_Sleep_Timer extends BaseTest {
         Assert.assertFalse(menu.isCustomDialogOpen(), "Custom dialog chua dong");
         reopenSleep(home, menu);
         Assert.assertTrue(menu.isSleepTimerActive(), "Custom timer 5 phut khong duoc set");
-        ExtentReportManager.getTest().log(Status.PASS, "Custom timer 5 phut set OK.");
+        // MINH CHUNG: chup dialog ACTIVE (custom 5 phut da set) NGAY luc nay, truoc khi reset+dong
+        ExtentReportManager.attachProof("Custom timer 5 phut da set (ACTIVE) - minh chung");
 
         resetAndClose(home, menu);
     }

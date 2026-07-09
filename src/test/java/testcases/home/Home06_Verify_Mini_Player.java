@@ -84,8 +84,8 @@ public class Home06_Verify_Mini_Player extends BaseTest {
         home.tapMiniPlayerQueue();
         home.sleep(1500);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong roi Home -> chua mo Playing Queue");
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Mo man Playing Queue OK (chi tiet queue se verify o module Player).");
+        // MINH CHUNG: chup man Playing Queue NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Playing Queue - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong ve duoc Home");
@@ -100,8 +100,8 @@ public class Home06_Verify_Mini_Player extends BaseTest {
         // van true. Phai verify bang ORACLE DUONG: full player co node "Playing now".
         Assert.assertTrue(home.isFullPlayerDisplayed(),
                 "Tap mini player khong mo full player (khong thay 'Playing now')");
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Mo full player OK (chi tiet full player se verify o module Player).");
+        // MINH CHUNG: chup full player NGAY luc nay, truoc khi dong ve Home
+        ExtentReportManager.attachProof("Da mo full player (Play Now) - minh chung");
 
         // Don dep: dong full player ve Home
         home.pressBack();

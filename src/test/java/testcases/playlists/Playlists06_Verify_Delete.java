@@ -39,6 +39,8 @@ public class Playlists06_Verify_Delete extends BaseTest {
         pl.tapSheetDelete();
         home.sleep(900);
         Assert.assertTrue(pl.isConfirmDialogOpen(), "Khong hien dialog xac nhan xoa");
+        // MINH CHUNG: chup dialog xac nhan xoa dang hien, truoc khi CANCEL
+        ExtentReportManager.attachProof("Dialog xac nhan xoa dang hien - minh chung");
         pl.tapConfirmCancel();
         home.sleep(1000);
 

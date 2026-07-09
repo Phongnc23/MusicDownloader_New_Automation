@@ -56,8 +56,8 @@ public class Artists05_Verify_Share_With_Limit extends BaseTest {
                     "Share folder " + folder + " (" + n + " bai >10) BI CHAN: khong mo resolver, sheet dong.");
         } else {
             Assert.assertTrue(artists.waitShareSheetOpen(5000), folder + " (" + n + " <=10) khong mo resolver");
-            ExtentReportManager.getTest().log(Status.PASS,
-                    "Share folder " + folder + " (" + n + " bai <=10) THANH CONG: mo resolver.");
+            // MINH CHUNG: share resolver da mo cho folder <=10, chup truoc khi dong
+            ExtentReportManager.attachProof("Share resolver mo cho folder " + folder + " (" + n + " bai <=10) - minh chung");
             artists.closeShareSheet(); home.sleep(800);
         }
     }
@@ -105,7 +105,8 @@ public class Artists05_Verify_Share_With_Limit extends BaseTest {
         artists.openDetailTrackMenu(0); home.sleep(1000);
         artists.tapSheetShare(); // "Share track" trong menu 7 action
         Assert.assertTrue(artists.waitShareSheetOpen(5000), "Share 1 track khong mo resolver");
-        ExtentReportManager.getTest().log(Status.PASS, "Share 1 track -> mo resolver (1 file <10).");
+        // MINH CHUNG: share resolver da mo cho 1 track, chup truoc khi dong
+        ExtentReportManager.attachProof("Share resolver mo cho 1 track (1 file <10) - minh chung");
         artists.closeShareSheet(); home.sleep(800);
     }
 

@@ -33,6 +33,8 @@ public class Albums03_Verify_Sort extends BaseTest {
         home.sleep(900);
         Assert.assertTrue(albums.isSortDialogOpen(), "Khong mo duoc Sort dialog");
         Assert.assertTrue(albums.isSortTitleOptionDisplayed(), "Khong thay option 'Title'");
+        // MINH CHUNG: chup Sort dialog (co option Title) NGAY luc nay, truoc khi dong bang Scrim
+        ExtentReportManager.attachProof("Sort dialog mo co option Title - minh chung");
         albums.closeSortViaScrim();
         home.sleep(800);
         Assert.assertFalse(albums.isSortDialogOpen(), "Scrim khong dong duoc Sort dialog");
@@ -60,6 +62,8 @@ public class Albums03_Verify_Sort extends BaseTest {
         if (!albums.isSortDialogOpen()) { albums.tapListSort(); home.waitUntil(albums::isSortDialogOpen, 4000); }
         Assert.assertTrue(albums.isSortTitleActive(), "Sau tap lan 2 'Title' khong con active (sau reopen)");
 
+        // MINH CHUNG: chup Sort dialog voi Title dang active NGAY luc nay, truoc khi dong
+        ExtentReportManager.attachProof("Sort Title active trong dialog - minh chung");
         if (albums.isSortDialogOpen()) albums.closeSortViaX();
         home.sleep(800);
         Assert.assertFalse(albums.isSortDialogOpen(), "Khong dong duoc Sort dialog bang X");
@@ -150,8 +154,8 @@ public class Albums03_Verify_Sort extends BaseTest {
                     "Sort '" + opt + "' OK -> active, track dau: \"" + albums.getFirstDetailTrackTitle() + "\"");
         }
 
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Da nhan chon ca 7 option in-album sort 1 luot: tat ca active dung, list on dinh.");
+        // MINH CHUNG: chup Album Detail sau khi da duyet 7 option sort NGAY luc nay, truoc khi back
+        ExtentReportManager.attachProof("Da nhan chon ca 7 option in-album sort - minh chung");
         albums.tapDetailBack();
     }
 }

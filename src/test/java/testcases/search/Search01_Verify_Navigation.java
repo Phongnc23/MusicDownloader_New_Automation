@@ -27,7 +27,8 @@ public class Search01_Verify_Navigation extends SearchOnlineBaseTest {
         home.tapSearchBar();
         home.waitUntil(search::isSearchScreenDisplayed, 5000);
         Assert.assertTrue(search.isSearchScreenDisplayed(), "Khong mo duoc man Search Online");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo man Search Online OK.");
+        // MINH CHUNG: chup man Search Online NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Search Online - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong ve duoc Home");
@@ -41,7 +42,8 @@ public class Search01_Verify_Navigation extends SearchOnlineBaseTest {
         home.tapSearchBar();
         home.waitUntil(search::isKeyboardShown, 5000);
         Assert.assertTrue(search.isKeyboardShown(), "Ban phim khong tu bat khi vao Search");
-        ExtentReportManager.getTest().log(Status.PASS, "Ban phim tu bat khi vao Search.");
+        // MINH CHUNG: chup man Search (ban phim dang bat) NGAY luc nay, truoc khi back
+        ExtentReportManager.attachProof("Da mo Search, ban phim tu bat - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong ve duoc Home");
@@ -55,8 +57,8 @@ public class Search01_Verify_Navigation extends SearchOnlineBaseTest {
         home.waitUntil(() -> !home.isHomeDisplayed(), 5000);
         // App moi: icon goc phai mo Search In Library (man search khac) -> roi Home la dat.
         Assert.assertFalse(home.isHomeDisplayed(), "Khong roi Home -> chua mo man Search tu icon");
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Icon search goc phai mo man Search OK (chi tiet Search In Library o module TC_SL).");
+        // MINH CHUNG: chup man Search mo tu icon goc phai (da roi Home), truoc khi back
+        ExtentReportManager.attachProof("Da mo man Search tu icon goc phai (roi Home) - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong ve duoc Home");

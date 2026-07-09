@@ -58,7 +58,8 @@ public class Albums05_Verify_Edit_Actions extends BaseTest {
         albums.tapSheetAddList();
         home.sleep(1000);
         Assert.assertTrue(albums.isAddToPlaylistOpen(), "Khong mo duoc dialog Add to playlist");
-        ExtentReportManager.getTest().log(Status.PASS, "Add to playlist mo dialog.");
+        // MINH CHUNG: chup dialog Add to playlist dang mo NGAY luc nay, truoc khi back
+        ExtentReportManager.attachProof("Dialog Add to playlist mo - minh chung");
         home.pressBack();
     }
 }

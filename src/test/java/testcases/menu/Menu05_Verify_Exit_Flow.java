@@ -31,7 +31,8 @@ public class Menu05_Verify_Exit_Flow extends BaseTest {
         home.sleep(1200);
         Assert.assertTrue(home.isExitDialogDisplayed(),
                 "Khong hien dialog xac nhan thoat (title/Exit/Cancel)");
-        ExtentReportManager.getTest().log(Status.PASS, "Exit app hien dialog xac nhan thoat.");
+        // MINH CHUNG: chup Exit confirmation dialog NGAY luc nay, truoc khi Cancel don dep
+        ExtentReportManager.attachProof("Exit app hien dialog xac nhan thoat - minh chung");
 
         // Don dep: Cancel de o lai app
         home.tapCancelOnDialog();

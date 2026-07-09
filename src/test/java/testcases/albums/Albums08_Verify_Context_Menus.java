@@ -1,7 +1,6 @@
 package testcases.albums;
 
 import base.BaseTest;
-import com.aventstack.extentreports.Status;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AlbumsPage;
@@ -36,6 +35,8 @@ public class Albums08_Verify_Context_Menus extends BaseTest {
         home.sleep(1000);
         Assert.assertTrue(albums.areFourActionsDisplayed(), "Menu album-level khong du 4 action");
         Assert.assertTrue(albums.sheetHasNoExtraActions(), "Menu album-level khong duoc co Rename/Delete/File info");
+        // MINH CHUNG: chup menu album-level 4 action NGAY luc nay, truoc khi dong
+        ExtentReportManager.attachProof("Menu album-level 4 action - minh chung");
         albums.closeSheetViaBack();
         home.sleep(900);
 
@@ -44,7 +45,8 @@ public class Albums08_Verify_Context_Menus extends BaseTest {
         home.sleep(1000);
         Assert.assertTrue(tracksMenu.isTrackMenuOpen(), "Khong mo duoc menu track");
         Assert.assertTrue(tracksMenu.areAllMenuActionsDisplayed(), "Menu track khong du 7 action");
-        ExtentReportManager.getTest().log(Status.PASS, "Album-level = 4 action; track = 7 action.");
+        // MINH CHUNG: chup menu track 7 action NGAY luc nay, truoc khi dong
+        ExtentReportManager.attachProof("Menu track 7 action - minh chung");
         tracksMenu.closeMenuViaBack();
     }
 }

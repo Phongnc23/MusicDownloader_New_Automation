@@ -48,8 +48,8 @@ public class Albums09_Verify_SelectMode extends BaseTest {
 
         Assert.assertTrue(albums.isSelectModeActionsDisplayed(),
                 "Bottom bar thieu action (Add to queue/Add to list/Share file)");
-        ExtentReportManager.getTest().log(Status.PASS,
-                "Nhan giu album -> select mode (title + bottom bar 3 action).");
+        // MINH CHUNG: chup select mode (title + bottom bar 3 action) NGAY luc nay, truoc khi thoat
+        ExtentReportManager.attachProof("Select mode mo - bottom bar 3 action - minh chung");
         albums.closeSelectMode();
     }
 
@@ -62,7 +62,8 @@ public class Albums09_Verify_SelectMode extends BaseTest {
         albums.tapAlbumInSelectMode(0);
         home.sleep(900);
         Assert.assertEquals(albums.getSelectedCount(), 1, "Sau khi tap phai la 1 item selected");
-        ExtentReportManager.getTest().log(Status.PASS, "Tap album -> 1 item selected.");
+        // MINH CHUNG: chup select mode voi 1 item selected NGAY luc nay, truoc khi thoat
+        ExtentReportManager.attachProof("Da chon 1 album trong select mode - minh chung");
         albums.closeSelectMode();
     }
 
@@ -77,7 +78,8 @@ public class Albums09_Verify_SelectMode extends BaseTest {
         home.sleep(900);
         Assert.assertEquals(albums.getSelectedCount(), total,
                 "Chon tat ca khong khop tong so album (" + total + ")");
-        ExtentReportManager.getTest().log(Status.PASS, "Chon tat ca -> " + total + " item selected.");
+        // MINH CHUNG: chup select mode sau khi chon tat ca NGAY luc nay, truoc khi thoat
+        ExtentReportManager.attachProof("Chon tat ca album -> " + total + " item selected - minh chung");
         albums.closeSelectMode();
     }
 
@@ -87,7 +89,8 @@ public class Albums09_Verify_SelectMode extends BaseTest {
         AlbumsPage albums = enterSelectMode(home, goAlbums(home));
 
         Assert.assertTrue(albums.isSelectModeActionsDisplayed(), "Thieu 1 trong 3 action bottom bar");
-        ExtentReportManager.getTest().log(Status.PASS, "Bottom bar du 3 action.");
+        // MINH CHUNG: chup bottom bar 3 action select mode NGAY luc nay, truoc khi thoat
+        ExtentReportManager.attachProof("Bottom bar 3 action select mode - minh chung");
         albums.closeSelectMode();
     }
 
@@ -114,7 +117,8 @@ public class Albums09_Verify_SelectMode extends BaseTest {
         albums.tapSelectAddList();
         home.sleep(1200);
         Assert.assertTrue(albums.isAddToPlaylistOpen(), "Add to list khong mo dialog Add to playlist");
-        ExtentReportManager.getTest().log(Status.PASS, "Chon album + Add to list -> dialog Add to playlist.");
+        // MINH CHUNG: chup dialog Add to playlist NGAY luc nay, truoc khi back
+        ExtentReportManager.attachProof("Dialog Add to playlist tu select mode - minh chung");
         home.pressBack();
     }
 }

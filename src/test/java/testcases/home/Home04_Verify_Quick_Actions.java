@@ -25,7 +25,8 @@ public class Home04_Verify_Quick_Actions extends BaseTest {
         home.tapSearchBar();
         home.sleep(1500);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong roi Home -> chua mo Search Online");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo man Search Online OK.");
+        // MINH CHUNG: chup man Search Online (ban phim hien) NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Search Online (ban phim hien) - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong quay lai duoc Home");
@@ -37,7 +38,8 @@ public class Home04_Verify_Quick_Actions extends BaseTest {
         home.tapSearchIcon();
         home.sleep(1500);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong roi Home -> chua mo Search In Library");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo man Search In Library OK.");
+        // MINH CHUNG: chup man Search In Library NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Search In Library - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong quay lai duoc Home");
@@ -49,7 +51,8 @@ public class Home04_Verify_Quick_Actions extends BaseTest {
         home.tapDownloaded();
         home.sleep(1500);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong roi Home -> chua mo Downloaded");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo man Downloaded OK.");
+        // MINH CHUNG: chup man Downloaded NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Downloaded - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong quay lai duoc Home");
@@ -62,6 +65,8 @@ public class Home04_Verify_Quick_Actions extends BaseTest {
         home.sleep(1200);
         ExtentReportManager.getTest().log(Status.INFO,
                 "Da tap Sleep timer (assertion noi dung dialog se bo sung o module Menu)");
+        // MINH CHUNG: chup dialog Sleep timer NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo dialog Sleep timer - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(),
@@ -74,6 +79,8 @@ public class Home04_Verify_Quick_Actions extends BaseTest {
         HomePage home = new HomePage();
         home.tapRateUs();
         home.sleep(1500);
+        // MINH CHUNG: chup trang thai Rate us (dialog trong app HOAC Play Store) NGAY luc nay
+        ExtentReportManager.attachProof("Da mo Rate us (dialog / Play Store) - minh chung");
 
         String pkg = getDriver().getCurrentPackage();
         ExtentReportManager.getTest().log(Status.INFO, "Package hien tai sau tap Rate us: " + pkg);
@@ -95,7 +102,8 @@ public class Home04_Verify_Quick_Actions extends BaseTest {
         home.tapSettings();
         home.sleep(1500);
         Assert.assertFalse(home.isHomeDisplayed(), "Khong roi Home -> chua mo Settings");
-        ExtentReportManager.getTest().log(Status.PASS, "Mo man Settings OK.");
+        // MINH CHUNG: chup man Settings NGAY luc nay, truoc khi back ve Home
+        ExtentReportManager.attachProof("Da mo man Settings - minh chung");
 
         home.pressBackToHome();
         Assert.assertTrue(home.isHomeDisplayed(), "Khong quay lai duoc Home");
@@ -108,7 +116,8 @@ public class Home04_Verify_Quick_Actions extends BaseTest {
         home.sleep(1200);
         Assert.assertTrue(home.isDrawerOpen(),
                 "Drawer khong mo (khong thay item 'Exit app')");
-        ExtentReportManager.getTest().log(Status.PASS, "Drawer mo dung.");
+        // MINH CHUNG: chup drawer dang mo NGAY luc nay, truoc khi dong lai
+        ExtentReportManager.attachProof("Drawer dang mo - minh chung");
 
         // LUU Y: KHONG dung BACK de dong drawer (BACK o drawer bung exit dialog).
         home.closeMenuDrawer();

@@ -50,6 +50,8 @@ public class Artists08_Verify_Sort extends BaseTest {
         if (!artists.isSortDialogOpen()) { artists.tapListSort(); home.waitUntil(artists::isSortDialogOpen, 4000); }
         Assert.assertTrue(artists.isSortTitleActive(), "Sau tap lan 2 'Title' khong con active (sau reopen)");
 
+        // MINH CHUNG: Sort dialog voi option 'Title' active sau khi toggle 2 lan, chup truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog - option 'Title' active sau toggle 2 lan - minh chung");
         if (artists.isSortDialogOpen()) artists.closeSortViaX();
         home.waitUntil(() -> !artists.isSortDialogOpen(), 3000);
         Assert.assertFalse(artists.isSortDialogOpen(), "Khong dong duoc Sort dialog bang X");

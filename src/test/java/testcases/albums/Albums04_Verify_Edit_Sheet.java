@@ -33,7 +33,8 @@ public class Albums04_Verify_Edit_Sheet extends BaseTest {
         int sheetCount = albums.getSheetSongCount();
         Assert.assertTrue(sheetCount > 0, "Sheet khong hien so bai");
         Assert.assertEquals(sheetCount, firstCount, "So bai sheet (" + sheetCount + ") khac card (" + firstCount + ")");
-        ExtentReportManager.getTest().log(Status.PASS, "Sheet 4 action + header dung (" + sheetCount + " songs).");
+        // MINH CHUNG: chup sheet 4 action + header NGAY luc nay, truoc khi dong
+        ExtentReportManager.attachProof("Sheet 4 action + header dung (" + sheetCount + " songs) - minh chung");
         albums.closeSheetViaBack();
     }
 
@@ -45,6 +46,8 @@ public class Albums04_Verify_Edit_Sheet extends BaseTest {
         albums.openAlbumMenuFromList();
         home.sleep(1000);
         Assert.assertTrue(albums.isFourActionSheetOpen(), "Truoc dieu kien: sheet chua mo");
+        // MINH CHUNG: chup sheet dang mo NGAY luc nay, truoc khi dong bang Scrim
+        ExtentReportManager.attachProof("Sheet mo - minh chung truoc khi dong Scrim");
         albums.closeSheetViaScrim();
         home.sleep(800);
         Assert.assertFalse(albums.isFourActionSheetOpen(), "Tap Scrim khong dong duoc sheet");
@@ -59,6 +62,8 @@ public class Albums04_Verify_Edit_Sheet extends BaseTest {
         albums.openAlbumMenuFromList();
         home.sleep(1000);
         Assert.assertTrue(albums.isFourActionSheetOpen(), "Truoc dieu kien: sheet chua mo");
+        // MINH CHUNG: chup sheet dang mo NGAY luc nay, truoc khi BACK
+        ExtentReportManager.attachProof("Sheet mo - minh chung truoc khi BACK");
         albums.closeSheetViaBack();
         home.sleep(800);
         Assert.assertFalse(albums.isFourActionSheetOpen(), "BACK khong dong duoc sheet");

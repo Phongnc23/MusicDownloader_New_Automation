@@ -191,6 +191,41 @@ public class HomePage extends BasePage {
     }
 
     /**
+     * Oracle "dang phat" BEN VUNG cho CA bai CUC DAI lan CUC NGAN. Khac isMiniPlayerProgressAdvancing:
+     *  - Bai CUC DAI (vd 5 phut): 1% mat ~3s -> window ngan (4s) co the KHONG kip thay % nhay 1 nac
+     *    integer -> bao "khong phat" oan. O day chi can thay >=2 GIA TRI % KHAC nhau bat ky trong
+     *    window (paused/dung han = hang so 1 gia tri -> false).
+     *  - Bai CUC NGAN (0:03 auto-next): title doi hoac % nhay lien tuc -> bat duoc ngay.
+     * Tra ve true NGAY khi: title doi, HOAC doc duoc >=2 gia tri % khac nhau.
+     */
+    public boolean isPlaybackActive(long windowMs) {
+        java.util.Set<Integer> seen = new java.util.HashSet<>();
+        String baseTitle = getMiniPlayerTrackTitle();
+        int p = getMiniPlayerProgress();
+        if (p >= 0) seen.add(p);
+        long deadline = System.currentTimeMillis() + windowMs;
+        while (System.currentTimeMillis() < deadline) {
+            sleep(300);
+            int cur = getMiniPlayerProgress();
+            String t = getMiniPlayerTrackTitle();
+            if (!t.isEmpty() && !baseTitle.isEmpty() && !t.equals(baseTitle)) {
+                log.info("[MiniPlayer] dang phat (title doi: {} -> {})", baseTitle, t);
+                return true;
+            }
+            if (cur >= 0) {
+                seen.add(cur);
+                if (seen.size() >= 2) {
+                    log.info("[MiniPlayer] dang phat (>=2 gia tri %: {})", seen);
+                    return true;
+                }
+            }
+            if (!t.isEmpty()) baseTitle = t;
+        }
+        log.info("[MiniPlayer] khong thay dau hieu phat (seen%={})", seen);
+        return false;
+    }
+
+    /**
      * Tap vung info mini player -> mo full player (Play Now).
      * Content-desc mini player ("32%, <unknown>") doi MOI GIAY -> Flutter recreate node ->
      * click(element) hay dinh StaleElementReference. Nen tap theo TOA DO tam vung info

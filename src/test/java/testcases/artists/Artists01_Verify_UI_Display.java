@@ -29,7 +29,8 @@ public class Artists01_Verify_UI_Display extends BaseTest {
         artists.tapListSort();
         home.sleep(900);
         Assert.assertTrue(artists.isSortDialogOpen(), "Nut sort khong mo duoc Sort dialog");
-        ExtentReportManager.getTest().log(Status.PASS, "Header 'Artists' + nut sort hoat dong.");
+        // MINH CHUNG: Sort dialog dang mo, chup truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog mo tu header Artists - minh chung");
         artists.closeSortViaX();
     }
 

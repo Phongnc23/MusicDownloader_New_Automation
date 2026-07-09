@@ -124,7 +124,8 @@ public class Tracks06_Verify_Queue_Share_Delete extends BaseTest {
         tracks.openTrackMenu(0); home.sleep(900);
         tracks.tapMenuShareTrack();
         Assert.assertTrue(tracks.waitShareSheetOpen(5000), "Khong mo duoc Android share resolver");
-        ExtentReportManager.getTest().log(Status.PASS, "Share track mo Android resolver.");
+        // MINH CHUNG: chup Android share resolver dang mo truoc khi dong
+        ExtentReportManager.attachProof("Android share resolver da mo - minh chung");
         tracks.closeShareSheet(); home.sleep(800);
     }
 
@@ -137,6 +138,8 @@ public class Tracks06_Verify_Queue_Share_Delete extends BaseTest {
         tracks.openTrackMenu(0); home.sleep(900);
         tracks.tapMenuDelete(); home.sleep(900);
         Assert.assertTrue(tracks.isDeleteConfirmOpen(), "Khong mo confirm dialog");
+        // MINH CHUNG: chup Delete confirm dialog dang mo truoc khi CANCEL
+        ExtentReportManager.attachProof("Delete confirm dialog dang mo - minh chung");
         tracks.tapDeleteCancel(); home.sleep(1000);
         Assert.assertEquals(tracks.getTrackCount(), before, "CANCEL ma so track doi");
         ExtentReportManager.getTest().log(Status.PASS, "Delete CANCEL: so track khong doi (" + before + ").");

@@ -29,7 +29,8 @@ public class Albums01_Verify_UI_Display extends BaseTest {
         albums.tapListSort();
         home.sleep(900);
         Assert.assertTrue(albums.isSortDialogOpen(), "Nut sort khong mo duoc Sort dialog");
-        ExtentReportManager.getTest().log(Status.PASS, "Header 'Albums' + count + sort + bottom nav OK.");
+        // MINH CHUNG: chup Sort dialog dang mo NGAY luc nay, truoc khi dong
+        ExtentReportManager.attachProof("Sort dialog mo tu Albums list - minh chung");
         albums.closeSortViaX();
     }
 

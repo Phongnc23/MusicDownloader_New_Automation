@@ -50,6 +50,8 @@ public class Playlists07_Verify_Clear_And_Share extends BaseTest {
 
         boolean dlg = pl.isConfirmDialogOpen();
         if (dlg) {
+            // MINH CHUNG: chup confirm dialog 'Clear recently played' dang hien, truoc khi CANCEL
+            ExtentReportManager.attachProof("Confirm 'Clear recently played' dang hien - minh chung");
             pl.tapConfirmCancel();   // CHI huy, khong xoa
             home.sleep(900);
             ExtentReportManager.getTest().log(Status.INFO, "Da hien confirm dialog -> bam CANCEL.");
@@ -82,6 +84,8 @@ public class Playlists07_Verify_Clear_And_Share extends BaseTest {
 
         Assert.assertFalse(pl.isShareSheetOpen(),
                 "Share " + count + " track (>10) dang le bi chan nhung resolver van mo");
+        // MINH CHUNG: chup trang thai sau tap Share (resolver KHONG mo -> bi chan), truoc khi AfterMethod ve list
+        ExtentReportManager.attachProof("Share My Favorite (>10 track) bi chan - resolver khong mo - minh chung");
         ExtentReportManager.getTest().log(Status.PASS,
                 "Share My Favorite (" + count + " > 10) bi chan dung (khong mo resolver).");
     }
