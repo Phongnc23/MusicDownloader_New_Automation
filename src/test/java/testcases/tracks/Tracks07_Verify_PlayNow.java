@@ -72,33 +72,48 @@ public class Tracks07_Verify_PlayNow extends BaseTest {
         tracks.pnCollapse();
     }
 
-    @Test(description = "TC_TRK_051: Nut Next chuyen bai sau")
+    @Test(description = "TC_TRK_051: Nut Next chuyen bai sau (xac nhan qua chi so queue)")
     public void TC_TRK_051_next_track() {
         HomePage home = new HomePage();
         TracksPage tracks = goTracks(home);
 
         tracks.tapPlayAll(); home.sleep(2000);
-        // So sanh ten bai TRUOC vs SAU Next tu CUNG NGUON (mini player). Ten bai kem DUOI ID.
-        String before = home.getMiniPlayerTrackTitle();
-        Assert.assertFalse(before.isEmpty(), "Khong doc duoc ten bai truoc Next");
+        String titleBefore = home.getMiniPlayerTrackTitle();
 
-        // ROBUST: thu vien co the co NHIEU BAN SAO cung bai (file import trung -> ten + duoi GIONG HET).
-        // Sau khi sort Duration, cac ban sao dai dồn len dau -> Next 1 lan co the sang BAN SAO cung ten
-        // -> so title bang nhau (khong phai ket, chi la trung ten). Vi vay bam Next LAP toi 6 lan den khi
-        // title DOI: neu doi -> Next co tac dung (qua ban sao); neu sau 6 lan van y het -> that su ket.
-        String after = before;
-        for (int i = 0; i < 6 && after.equals(before); i++) {
-            home.tapMiniPlayer(); home.sleep(1300);
+        // XAC NHAN NEXT bang CHI SO QUEUE "(N/total)" - ben vung voi thu vien co bai TRUNG TEN.
+        // Thu vien co bai viral tai NHIEU BAN SAO (hau to id nguon "-998054" nam TRONG title -> cac ban sao
+        // co title GIONG HET, cung ~72 phut) -> KHONG the dung title de biet da Next hay chua. Playing Queue
+        // header hien vi tri bai dang phat "(N/total)" -> doc N truoc va sau Next: N phai TANG = Next da tien queue.
+        home.tapMiniPlayerQueue(); home.sleep(1500);
+        Assert.assertTrue(tracks.isPlayingQueueOpen(), "Khong mo duoc Playing Queue de doc vi tri truoc Next");
+        int posBefore = tracks.getQueuePosition();
+        Assert.assertTrue(posBefore > 0, "Khong doc duoc vi tri queue truoc Next (N/total)");
+        tracks.tapQueueBack(); home.sleep(1000);
+
+        // Bam Next 2 lan tren Play Now. Bai dau 71:58 KHONG tu auto-next -> Next that su phai tien queue.
+        for (int i = 0; i < 2; i++) {
+            home.tapMiniPlayer(); home.sleep(1400);
             if (!tracks.isPlayNowOpen()) { home.tapMiniPlayer(); home.sleep(1000); }
-            Assert.assertTrue(tracks.isPlayNowOpen(), "Khong mo duoc Play Now");
+            Assert.assertTrue(tracks.isPlayNowOpen(), "Khong mo duoc Play Now de bam Next");
             tracks.pnTapNext(); home.sleep(1600);
-            tracks.pnCollapse(); home.sleep(1200);
-            after = home.getMiniPlayerTrackTitle();
-            ExtentReportManager.getTest().log(Status.INFO, "Next lan " + (i + 1) + " -> " + after);
+            tracks.pnCollapse(); home.sleep(1000);
         }
-        Assert.assertNotEquals(after, before,
-                "Next khong chuyen sang bai KHAC sau nhieu lan (co the ket queue)");
-        ExtentReportManager.getTest().log(Status.PASS, "Next chuyen sang bai khac (qua cac ban sao trung ten).");
+
+        // Doc vi tri SAU -> phai TANG (Next da tien queue). Bai sieu ngan co the auto-next -> N tang > 2, van dung.
+        home.tapMiniPlayerQueue(); home.sleep(1500);
+        Assert.assertTrue(tracks.isPlayingQueueOpen(), "Khong mo lai duoc Playing Queue de doc vi tri sau Next");
+        int posAfter = tracks.getQueuePosition();
+        ExtentReportManager.getTest().log(Status.INFO,
+                "Queue position: truoc=" + posBefore + " sau=" + posAfter + " | title truoc Next=" + titleBefore);
+        // MINH CHUNG: chup Playing Queue voi vi tri da tien (bai dang phat highlight o dong moi)
+        ExtentReportManager.attachProof("Playing Queue sau Next - vi tri " + posBefore + " -> " + posAfter);
+        tracks.tapQueueBack(); home.sleep(800);
+
+        Assert.assertTrue(posAfter > posBefore,
+                "Next KHONG tien queue: vi tri truoc=" + posBefore + " sau=" + posAfter
+              + " (co the ket queue hoac dang repeat-one)");
+        ExtentReportManager.getTest().log(Status.PASS,
+                "Next tien queue tu vi tri " + posBefore + " -> " + posAfter + " (xac nhan qua chi so N/total).");
     }
 
     @Test(description = "TC_TRK_052: Nut Previous (man on dinh, bai van phat)")
