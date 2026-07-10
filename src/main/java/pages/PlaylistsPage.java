@@ -227,21 +227,29 @@ public class PlaylistsPage extends BasePage {
         log.info("Mo playlist detail: {}", name);
     }
     public void openPlaylistMenu(String name) {
-        WebElement c = cardByName(name);
-        if (c == null) return;
-        Rectangle r = c.getRect();
-        int cy = r.getY() + r.getHeight() / 2;
-        // Card sat day (gan mini player) -> tap 3 cham co the truot. Nang len roi tim lai.
-        if (cy > 2050) {
-            GestureUtils.swipe(driver, 860, 1600, 860, 1050, 400);
-            sleep(500);
-            c = cardByName(name);
+        // Tap 3 cham card la coordinate-based (Flutter) -> DE TRUOT (content-desc/vi tri doi, list vua render
+        // sau khi tao playlist). Tap mu 1 lan hay fail oan "khong mo duoc sheet". RETRY toi 3 lan: moi lan
+        // re-find card + re-tap, cho toi khi 1 sheet mo (isSheetOpen). Cung pattern voi removeFromQueue.
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            WebElement c = cardByName(name);
             if (c == null) return;
-            r = c.getRect();
-            cy = r.getY() + r.getHeight() / 2;
+            Rectangle r = c.getRect();
+            int cy = r.getY() + r.getHeight() / 2;
+            // Card sat day (gan mini player) -> tap 3 cham co the truot. Nang len roi tim lai.
+            if (cy > 2050) {
+                GestureUtils.swipe(driver, 860, 1600, 860, 1050, 400);
+                sleep(500);
+                c = cardByName(name);
+                if (c == null) return;
+                r = c.getRect();
+                cy = r.getY() + r.getHeight() / 2;
+            }
+            GestureUtils.tap(driver, CARD_MENU_X, cy);
+            log.info("Tap 3 cham playlist: {} (y={}) lan {}", name, cy, attempt);
+            if (waitUntil(this::isSheetOpen, 1500)) return;   // sheet da mo -> xong
+            sleep(400);
         }
-        GestureUtils.tap(driver, CARD_MENU_X, cy);
-        log.info("Tap 3 cham playlist: {} (y={})", name, cy);
+        log.warn("openPlaylistMenu: khong mo duoc sheet cho '{}' sau 3 lan tap 3 cham", name);
     }
     public void tapCreateNewPlaylist() { click(createNewPlaylist); log.info("Tap Create new playlist"); }
 
