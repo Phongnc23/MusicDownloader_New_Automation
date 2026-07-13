@@ -5,6 +5,7 @@ import com.aventstack.extentreports.Status;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.TracksPage;
 import report.ExtentReportManager;
 
 /**
@@ -57,10 +58,25 @@ public class Home03_Verify_UI_Display extends BaseTest {
     @Test(description = "TC_HOME_008: Mini player hien khi co bai da load/dang phat")
     public void TC_HOME_008_mini_player_displayed() {
         HomePage home = new HomePage();
-        ExtentReportManager.getTest().log(Status.INFO,
-                "Co track da load (persist qua noReset) -> mini player phai hien");
+        // Cai moi / mo lan dau: nguoi dung CHUA phat bai nao -> chua co mini player.
+        // Tu dam bao dieu kien: vao Tracks phat 1 bai roi ve Home moi verify.
+        if (!home.isMiniPlayerDisplayed()) {
+            ExtentReportManager.getTest().log(Status.INFO,
+                    "Chua co mini player (chua phat bai nao) -> vao Tracks phat 1 bai roi ve Home");
+            TracksPage tracks = new TracksPage();
+            home.tapNavTracks();
+            home.waitUntil(tracks::isTracksScreenDisplayed, 6000);
+            Assert.assertTrue(tracks.isTracksScreenDisplayed(), "Khong vao duoc man Tracks de phat bai");
+            tracks.tapPlayAll();
+            home.waitUntil(home::isMiniPlayerDisplayed, 2500);
+            home.tapNavHome();
+            home.waitUntil(home::isHomeTitleDisplayed, 3000);
+        } else {
+            ExtentReportManager.getTest().log(Status.INFO,
+                    "Da co track load (persist qua noReset) -> mini player phai hien");
+        }
         Assert.assertTrue(home.isMiniPlayerDisplayed(),
-                "Mini player khong hien. Neu fail: phat 1 bai truoc khi chay (can co track load).");
+                "Mini player khong hien du da phat 1 bai (can co track load).");
         ExtentReportManager.getTest().log(Status.PASS, "Mini player hien dung khi co track.");
     }
 
